@@ -1,47 +1,52 @@
 <?php
+/**
+ * We store the RSS Journal Key in a separate file.
+ * This key is used to access protected Journal entries
+ * via RSS and allows us to give MailChimp an RSS URL
+ * for RSS-to-Email campaigns for Journal subscribers.
+ */
+require_once( 'rss-journal-key.php' );
 
 /**
  * Returns recent posts for given category and excludes given post formats
  */
-if ( ! function_exists( 'raamdev_get_recent_posts' ) ) :
-	function raamdev_get_recent_posts( $number_posts = '10', $category = '', $exclude_formats = array() ) {
+function raamdev_get_recent_posts( $number_posts = '10', $category = '', $exclude_formats = array() ) {
 
-		// Make sure category exists
-		if ( ! get_cat_ID( $category ) ) {
-			return FALSE;
-		}
-
-		// Build array of format exclution queries
-		if ( ! empty( $exclude_formats ) ) :
-			$i         = 0;
-			$tax_query = array();
-
-			foreach ( $exclude_formats as $format ) {
-
-				$tax_query[$i] = array(
-					'taxonomy' => 'post_format',
-					'field'    => 'slug',
-					'terms'    => 'post-format-' . $format,
-					'operator' => 'NOT IN'
-				);
-
-				$i ++;
-			}
-		endif;
-
-		?>
-		<ul>
-			<?php
-			$args = array( 'numberposts' => $number_posts, 'category' => get_cat_ID( $category ), 'post_status' => 'publish', 'tax_query' => $tax_query );
-			$recent_posts = wp_get_recent_posts( $args );
-			foreach ( $recent_posts as $recent ) {
-				echo '<li><a href="' . get_permalink( $recent["ID"] ) . '" title="Look ' . esc_attr( $recent["post_title"] ) . '" >' . $recent["post_title"] . '</a> </li> ';
-			}
-			?>
-		</ul>
-	<?php
+	// Make sure category exists
+	if ( ! get_cat_ID( $category ) ) {
+		return FALSE;
 	}
-endif;
+
+	// Build array of format exclution queries
+	if ( ! empty( $exclude_formats ) ) :
+		$i         = 0;
+		$tax_query = array();
+
+		foreach ( $exclude_formats as $format ) {
+
+			$tax_query[$i] = array(
+				'taxonomy' => 'post_format',
+				'field'    => 'slug',
+				'terms'    => 'post-format-' . $format,
+				'operator' => 'NOT IN'
+			);
+
+			$i ++;
+		}
+	endif;
+
+	?>
+	<ul>
+		<?php
+		$args = array( 'numberposts' => $number_posts, 'category' => get_cat_ID( $category ), 'post_status' => 'publish', 'tax_query' => $tax_query );
+		$recent_posts = wp_get_recent_posts( $args );
+		foreach ( $recent_posts as $recent ) {
+			echo '<li><a href="' . get_permalink( $recent["ID"] ) . '" title="Look ' . esc_attr( $recent["post_title"] ) . '" >' . $recent["post_title"] . '</a> </li> ';
+		}
+		?>
+	</ul>
+<?php
+}
 
 /*
  * Add Twitter handle to end of tweet text when sharing via Twitter
@@ -125,3 +130,115 @@ function raamdev_journal_not_released_comments_message() {
 	</div>
 <?php
 }
+
+/*
+ * Hide the Twitter handle when adding mentions to posts
+ * with Twitter Mentions as Comment Plugin
+ */
+function tmac_hide_twitter_handle() {
+	return TRUE;
+}
+
+add_filter( 'tmac_hide_twitter_handle', 'tmac_hide_twitter_handle' );
+
+/**
+ * Filter post formats from RSS feed
+ */
+function rd_rss_filter_post_formats( &$wp_query ) {
+	if ( $wp_query->is_feed() ) {
+		if ( isset( $wp_query->query_vars['rss-post-format-aside'] ) ) { // Only return Asides
+			$post_format_tax_query = array(
+				'taxonomy' => 'post_format',
+				'field'    => 'slug',
+				'terms'    => 'post-format-aside',
+				'operator' => 'IN'
+			);
+			$tax_query             = $wp_query->get( 'tax_query' );
+			if ( is_array( $tax_query ) ) {
+				$tax_query = $tax_query + $post_format_tax_query;
+			}
+			else {
+				$tax_query = array( $post_format_tax_query );
+			}
+			$wp_query->set( 'tax_query', $tax_query );
+		}
+		else if ( isset( $wp_query->query_vars['rss-post-format-image'] ) ) { // Only return Images
+
+			$post_format_tax_query = array(
+				'taxonomy' => 'post_format',
+				'field'    => 'slug',
+				'terms'    => 'post-format-image',
+				'operator' => 'IN'
+			);
+			$tax_query             = $wp_query->get( 'tax_query' );
+			if ( is_array( $tax_query ) ) {
+				$tax_query = $tax_query + $post_format_tax_query;
+			}
+			else {
+				$tax_query = array( $post_format_tax_query );
+			}
+			$wp_query->set( 'tax_query', $tax_query );
+		}
+		else if ( isset( $wp_query->query_vars['rss-post-format-standard'] ) ) { //
+
+			$post_format_tax_query = array(
+				'taxonomy' => 'post_format',
+				'field'    => 'slug',
+				'terms'    => array( 'post-format-aside', 'post-format-image' ),
+				'operator' => 'NOT IN'
+			);
+			$tax_query             = $wp_query->get( 'tax_query' );
+			if ( is_array( $tax_query ) ) {
+				$tax_query = $tax_query + $post_format_tax_query;
+			}
+			else {
+				$tax_query = array( $post_format_tax_query );
+			}
+			$wp_query->set( 'tax_query', $tax_query );
+		}
+	}
+}
+
+add_action( 'pre_get_posts', 'rd_rss_filter_post_formats' );
+
+/**
+ * Filter journal entries from RSS feeds, except when using secret URL
+ */
+add_action( 'pre_get_posts', 'rd_rss_filter_journal' );
+function rd_rss_filter_journal( &$wp_query ) {
+	if ( $wp_query->is_feed() && ! isset( $wp_query->query_vars[RSS_JOURNAL_KEY] ) ) {
+		$wp_query->set( 'category__not_in', '921' );
+	}
+	else if ( $wp_query->is_feed() && isset( $wp_query->query_vars[RSS_JOURNAL_KEY] ) ) {
+		$wp_query->set( 'category__in', '921' );
+	}
+}
+
+/**
+ * Query vars used for filtering RSS feeds
+ */
+function rd_add_query_vars( $aVars ) {
+	$aVars[] = "rss-post-format-aside";
+	$aVars[] = "rss-post-format-image";
+	$aVars[] = "rss-post-format-standard";
+	$aVars[] = RSS_JOURNAL_KEY;
+	return $aVars;
+}
+
+add_filter( 'query_vars', 'rd_add_query_vars' );
+
+/**
+ * Changes the RSS feed title to rename specific post formats
+ */
+function rd_rss_change_title() {
+	$title = get_wp_title_rss();
+	if ( strpos( $title, "Aside" ) ) {
+		$new_title = str_replace( "Aside", "Thoughts", $title );
+		echo $new_title;
+	}
+	else {
+		echo get_wp_title_rss();
+	}
+}
+
+add_filter( 'wp_title_rss', 'rd_rss_change_title', 1 );
