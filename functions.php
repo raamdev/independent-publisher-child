@@ -262,3 +262,16 @@ function raamdev_my_login_css() {
 }
 
 add_action( 'login_head', 'raamdev_my_login_css' );
+
+/**
+ * Allow Custom MIME Types to be uploaded via WordPress Media Library
+ */
+function raamdev_custom_mime_media_types($mimes)
+{
+	$mimes = array_merge($mimes, array(
+		'epub|mobi' => 'application/octet-stream'
+	));
+	return $mimes;
+}
+
+add_filter('upload_mimes', 'raamdev_custom_mime_media_types');
