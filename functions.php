@@ -266,12 +266,43 @@ add_action( 'login_head', 'raamdev_my_login_css' );
 /**
  * Allow Custom MIME Types to be uploaded via WordPress Media Library
  */
-function raamdev_custom_mime_media_types($mimes)
-{
-	$mimes = array_merge($mimes, array(
+function raamdev_custom_mime_media_types( $mimes ) {
+	$mimes = array_merge( $mimes, array(
 		'epub|mobi' => 'application/octet-stream'
-	));
+	) );
 	return $mimes;
 }
 
-add_filter('upload_mimes', 'raamdev_custom_mime_media_types');
+add_filter( 'upload_mimes', 'raamdev_custom_mime_media_types' );
+
+/**
+ * Shortcode for including Static HTML Files in posts
+ */
+function raamdev_sc_static_html( $atts ) {
+
+	// Extract Shortcode Parameters/Attributes
+	extract( shortcode_atts( array(
+		'subdir' => NULL,
+		'file'   => NULL
+	), $atts ) );
+
+	// Set file path
+	$path_base = ABSPATH . "wp-content/static-files/";
+	$path_file = ( $subdir == NULL ) ? $path_base . $file : $path_base . $subdir . "/" . $file;
+
+	// Load file or, if absent. throw error
+	if ( file_exists( $path_file ) ) {
+		$file_content = file_get_contents( $path_file );
+		return $file_content;
+	}
+	else {
+		trigger_error( "'$path_file' file not found", E_USER_WARNING );
+		return "FILE NOT FOUND: " . $path_file . "
+SUBDIR = " . $subdir . "
+FILE = " . $file . "
+
+";
+	}
+}
+
+add_shortcode( 'static_html', 'raamdev_sc_static_html' );
