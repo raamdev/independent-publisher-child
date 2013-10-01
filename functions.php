@@ -1,11 +1,12 @@
 <?php
+
 /**
  * We store the RSS Journal Key in a separate file.
  * This key is used to access protected Journal entries
  * via RSS and allows us to give MailChimp an RSS URL
  * for RSS-to-Email campaigns for Journal subscribers.
  */
-require_once( 'rss-journal-key.php' );
+require_once( WP_CONTENT_DIR . '/private/rss-journal-key.php' );
 
 /**
  * Returns recent posts for given category and excludes given post formats
@@ -206,6 +207,7 @@ add_action( 'pre_get_posts', 'raamdev_rss_filter_post_formats' );
  */
 add_action( 'pre_get_posts', 'raamdev_rss_filter_journal' );
 function raamdev_rss_filter_journal( &$wp_query ) {
+
 	if ( $wp_query->is_feed() && ! isset( $wp_query->query_vars[RSS_JOURNAL_KEY] ) ) {
 		$wp_query->set( 'category__not_in', '921' );
 	}
@@ -242,3 +244,21 @@ function raamdev_rss_change_title() {
 }
 
 add_filter( 'wp_title_rss', 'raamdev_rss_change_title', 1 );
+
+/**
+ * Redirect the registration form to a specific page after submission
+ */
+function __my_registration_redirect() {
+	return home_url( '/please-confirm-subscription' );
+}
+
+add_filter( 'registration_redirect', '__my_registration_redirect' );
+
+/**
+ * Add custom styles for login form (brings entire form up to accommodate for custom header logo)
+ */
+function raamdev_my_login_css() {
+	echo '<style type="text/css">#login { padding: 15px 0 0; margin: auto; } .login h1 a { padding-bottom: 0px; }</style>';
+}
+
+add_action( 'login_head', 'raamdev_my_login_css' );
