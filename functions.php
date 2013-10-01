@@ -306,3 +306,16 @@ FILE = " . $file . "
 }
 
 add_shortcode( 'static_html', 'raamdev_sc_static_html' );
+
+/**
+ * Return the full permalink instead of the shortlink.
+ * Prefer the full permalink over the shortlink so the domain (raamdev.com)
+ * appears in the URL when social sites pull page metadata (as opposed to
+ * wp.me URLs or raamdev.com/?p=1234).
+ */
+function raamdev_custom_shortlink() {
+	$permalink = get_permalink();
+	return $permalink;
+}
+
+add_filter( 'get_shortlink', 'raamdev_custom_shortlink' );
