@@ -144,7 +144,7 @@ add_filter( 'tmac_hide_twitter_handle', 'tmac_hide_twitter_handle' );
 /**
  * Filter post formats from RSS feed
  */
-function rd_rss_filter_post_formats( &$wp_query ) {
+function raamdev_rss_filter_post_formats( &$wp_query ) {
 	if ( $wp_query->is_feed() ) {
 		if ( isset( $wp_query->query_vars['rss-post-format-aside'] ) ) { // Only return Asides
 			$post_format_tax_query = array(
@@ -199,13 +199,13 @@ function rd_rss_filter_post_formats( &$wp_query ) {
 	}
 }
 
-add_action( 'pre_get_posts', 'rd_rss_filter_post_formats' );
+add_action( 'pre_get_posts', 'raamdev_rss_filter_post_formats' );
 
 /**
  * Filter journal entries from RSS feeds, except when using secret URL
  */
-add_action( 'pre_get_posts', 'rd_rss_filter_journal' );
-function rd_rss_filter_journal( &$wp_query ) {
+add_action( 'pre_get_posts', 'raamdev_rss_filter_journal' );
+function raamdev_rss_filter_journal( &$wp_query ) {
 	if ( $wp_query->is_feed() && ! isset( $wp_query->query_vars[RSS_JOURNAL_KEY] ) ) {
 		$wp_query->set( 'category__not_in', '921' );
 	}
@@ -217,7 +217,7 @@ function rd_rss_filter_journal( &$wp_query ) {
 /**
  * Query vars used for filtering RSS feeds
  */
-function rd_add_query_vars( $aVars ) {
+function raamdev_add_query_vars( $aVars ) {
 	$aVars[] = "rss-post-format-aside";
 	$aVars[] = "rss-post-format-image";
 	$aVars[] = "rss-post-format-standard";
@@ -225,12 +225,12 @@ function rd_add_query_vars( $aVars ) {
 	return $aVars;
 }
 
-add_filter( 'query_vars', 'rd_add_query_vars' );
+add_filter( 'query_vars', 'raamdev_add_query_vars' );
 
 /**
  * Changes the RSS feed title to rename specific post formats
  */
-function rd_rss_change_title() {
+function raamdev_rss_change_title() {
 	$title = get_wp_title_rss();
 	if ( strpos( $title, "Aside" ) ) {
 		$new_title = str_replace( "Aside", "Thoughts", $title );
@@ -241,4 +241,4 @@ function rd_rss_change_title() {
 	}
 }
 
-add_filter( 'wp_title_rss', 'rd_rss_change_title', 1 );
+add_filter( 'wp_title_rss', 'raamdev_rss_change_title', 1 );
