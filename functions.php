@@ -249,7 +249,7 @@ add_filter( 'wp_title_rss', 'raamdev_rss_change_title', 1 );
  * Redirect the registration form to a specific page after submission
  */
 function __my_registration_redirect() {
-	return home_url( '/please-confirm-subscription' );
+	return home_url( '/please-confirm-subscription/' );
 }
 
 add_filter( 'registration_redirect', '__my_registration_redirect' );
