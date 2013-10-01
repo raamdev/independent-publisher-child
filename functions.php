@@ -42,3 +42,11 @@ if ( ! function_exists( 'raamdev_get_recent_posts' ) ) :
 	<?php
 	}
 endif;
+
+/*
+ * Add Twitter handle to end of tweet text when sharing via Twitter
+ */
+function indiepub_sharing_buttons_tweet_text($tweet_text) {
+	return $tweet_text . '%20via%20@raamdev';
+}
+add_filter('indiepub_sharing_buttons_tweet_text', 'indiepub_sharing_buttons_tweet_text');
