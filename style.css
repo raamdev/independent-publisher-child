@@ -23,14 +23,12 @@ and Blueprint http://www.blueprintcss.org/
 -------------------------------------------------------------- */
 @import url('../independent-publisher/style.css');
 
-
 /* =Theme customization starts here
 -------------------------------------------------------------- */
 
 /**
  * Contains CSS for modifying plugin styles
  */
-
 
 /* Subscribe to Comments (Subscribe to Comments Reloaded Plugin) */
 
@@ -45,28 +43,34 @@ ul.related_post {
 	margin-left: 0;
 	font-size: 16px;
 }
+
 .related_post span {
 	color: #666665;
 	font-weight: normal;
 }
+
 .related_post a {
 	text-decoration: none;
 	color: black;
 	font-weight: 700;
 	line-height: 1;
 }
+
 .related_post a:hover {
 	text-decoration: none;
 }
+
 .related_post li {
 	margin-bottom: 20px;
 }
+
 .related_post li p {
 	display: inline;
 	font-weight: normal;
 	color: #666665;
 	font-size: 90%;
 }
+
 .related_post_title {
 	color: #b3b3b1;
 	text-transform: uppercase;
@@ -79,40 +83,39 @@ ul.related_post {
 	font-family: sans-serif;
 }
 
-
 /* Custom styles for the Snazzy Archives plugin */
-.sz_year
-{
-	font-size : 15px !important;
+.sz_year {
+	font-size: 15px !important;
 }
-.sz_excerpt
-{
-	display : none;
+
+.sz_excerpt {
+	display: none;
 }
-.sz_title
-{
-	font-weight : normal !important;
-	font-size   : 12px !important;
+
+.sz_title {
+	font-weight: normal !important;
+	font-size: 12px !important;
 }
+
 .snazzy a {
 	display: block;
 }
-.snazzy a:visited
-{
-	color : #444 !important;
+
+.snazzy a:visited {
+	color: #444 !important;
 }
-.snazzy a:hover
-{
-	color : #57ad68 !important;
+
+.snazzy a:hover {
+	color: #57ad68 !important;
 }
-.sz_img
-{
-	height      : inherit !important;
-	line-height : 18px !important;
+
+.sz_img {
+	height: inherit !important;
+	line-height: 18px !important;
 }
-.sz_clr
-{
-	padding-top : 10px !important;
+
+.sz_clr {
+	padding-top: 10px !important;
 }
 
 /* Custom styles for the WPaudio plugin */
@@ -120,13 +123,28 @@ ul.related_post {
 #audio-player {
 	display: inline;
 }
+
 #audio-player a {
 	color: #b3b3b1 !important;
 	font-size: 13px !important;
 	font-weight: 100 !important;
 	letter-spacing: 1px !important;
-	font-family: "Myriad Pro","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif !important;
+	font-family: "Myriad Pro", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif !important;
 }
+
 #audio-player img {
 	display: none !important;
+}
+
+/* Journal Subscription Option styles */
+
+.subscription-options-option {
+	float: left;
+	margin-right: 20px;
+}
+
+#journal-notice {
+	background: #eee;
+	padding: 30px 30px 10px 30px;
+	border-radius: 5px;
 }
