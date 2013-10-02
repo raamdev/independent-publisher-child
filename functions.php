@@ -330,7 +330,7 @@ add_filter( 'get_shortlink', 'raamdev_custom_shortlink' );
  *
  * @return string
  */
-function independent_publisher_logged_in_menu_items( $nav, $args ) {
+function raamdev_logged_in_menu_items( $nav, $args ) {
 
 	if ( is_user_logged_in() && ! is_single() && $args->theme_location == 'primary' ) {
 		$nav             = $nav . '<li class="menu-item">&nbsp;</li>';
@@ -342,4 +342,4 @@ function independent_publisher_logged_in_menu_items( $nav, $args ) {
 	return $nav;
 }
 
-add_filter( 'wp_nav_menu_items', 'independent_publisher_logged_in_menu_items', 10, 2 );
+add_filter( 'wp_nav_menu_items', 'raamdev_logged_in_menu_items', 10, 2 );
