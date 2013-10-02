@@ -33,10 +33,16 @@ get_header(); ?>
 					</div>
 				<?php endif; ?>
 
-				<?php if ( function_exists( 'indiepub_subscribe_form_mailchimp' ) ) : ?>
-					<div id="subscribe-form">
-						<?php indiepub_subscribe_form_mailchimp(); ?>
-					</div>
+				<?php if ( in_category( 'journal' ) && ! current_user_can( "access_s2member_level1" ) && raamdev_is_journal_viewable() ) : ?>
+					<?php if ( function_exists( 'indiepub_subscribe_form_custom' ) ) : ?>
+						<?php indiepub_subscribe_form_custom( '<strong>Subscribe</strong> to receive new Journal entries', '<p><a href="/subscriptions/"><button>View Subscription Options</button></a></p>' ); ?>
+					<?php endif; ?>
+				<?php elseif ( ! in_category( 'journal' ) ) : ?>
+					<?php if ( function_exists( 'indiepub_subscribe_form_mailchimp' ) ) : ?>
+						<div id="subscribe-form">
+							<?php indiepub_subscribe_form_mailchimp(); ?>
+						</div>
+					<?php endif; ?>
 				<?php endif; ?>
 
 			<?php endwhile; // end of the loop. ?>
