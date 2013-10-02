@@ -333,7 +333,7 @@ add_filter( 'get_shortlink', 'raamdev_custom_shortlink' );
 function raamdev_logged_in_menu_items( $nav, $args ) {
 
 	if ( is_user_logged_in() && ! is_single() && $args->theme_location == 'primary' ) {
-		$nav             = $nav . '<li class="menu-item">&nbsp;</li>';
+		$nav             = $nav . '<li class="menu-item menu-space-separator">&nbsp;</li>';
 		$my_account_link = '<li class="menu-item my-account-menu-item"><a href="/account/">My Account</a></li>';
 		$nav             = $nav . $my_account_link;
 		$logout_link     = '<li class="menu-item logout-menu-item"><a href="' . wp_logout_url() . '">Logout</a></li>';
