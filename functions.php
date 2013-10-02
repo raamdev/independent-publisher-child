@@ -115,7 +115,7 @@ function raamdev_journal_not_released_message() {
 				<a href="https://raamdev.com/wordpress/wp-login.php">login</a> to access this entry (you may need to
 				<a href="https://raamdev.com/wordpress/wp-login.php?action=lostpassword">reset your password</a> first).
 			</p>
-			<p style="text-align: center;"><a href="/subscriptions/">
+			<p><a href="/subscriptions/">
 					<button>View Subscription Options</button>
 				</a></p>
 		<?php } ?>
