@@ -321,3 +321,25 @@ function raamdev_custom_shortlink() {
 }
 
 add_filter( 'get_shortlink', 'raamdev_custom_shortlink' );
+
+/**
+ * Add "My Account" and "Logout" menu items to nav menu when logged in
+ *
+ * @param $nav
+ * @param $args
+ *
+ * @return string
+ */
+function independent_publisher_logged_in_menu_items( $nav, $args ) {
+
+	if ( is_user_logged_in() && ! is_single() && $args->theme_location == 'primary' ) {
+		$nav             = $nav . '<li class="menu-item">&nbsp;</li>';
+		$my_account_link = '<li class="menu-item my-account-menu-item"><a href="/account/">My Account</a></li>';
+		$nav             = $nav . $my_account_link;
+		$logout_link     = '<li class="menu-item logout-menu-item"><a href="' . wp_logout_url() . '">Logout</a></li>';
+		$nav             = $nav . $logout_link;
+	}
+	return $nav;
+}
+
+add_filter( 'wp_nav_menu_items', 'independent_publisher_logged_in_menu_items', 10, 2 );
