@@ -9,7 +9,7 @@
 	<header class="entry-header">
 		<h2 class="entry-title-meta">
 			<span class="entry-title-meta-author"><?php independent_publisher_posted_author() ?></span> in <?php echo independent_publisher_post_categories( '', TRUE ); ?>
-			<?php if( function_exists('indiepub_spoken_essay_link') ) : ?>
+			<?php if ( function_exists( 'indiepub_spoken_essay_link' ) ) : ?>
 				<?php if ( indiepub_spoken_essay_url() ) : ?>
 					| <?php echo indiepub_spoken_essay_link(); ?>
 				<?php endif; ?>
@@ -21,7 +21,7 @@
 	<!-- .entry-header -->
 
 	<div class="entry-content">
-		<?php if ( in_category('journal') ) : ?>
+		<?php if ( in_category( 'journal' ) ) : ?>
 			<?php if ( raamdev_is_journal_viewable() ) : // Only show content if Journal is viewable ?>
 
 				<?php raamdev_was_journal_entry_message(); ?>
@@ -40,7 +40,8 @@
 
 		<?php endif; ?>
 
-	</div><!-- .entry-content -->
+	</div>
+	<!-- .entry-content -->
 
 	<div class="post-author-bottom">
 		<div class="post-author-card">
@@ -61,7 +62,7 @@
 
 				<h2 class="site-published-date"><?php independent_publisher_posted_on_date(); ?></h2>
 
-				<?php if( function_exists('get_ncl_location') ) : ?>
+				<?php if ( function_exists( 'get_ncl_location' ) ) : ?>
 					<h2 class="site-published-location">
 						<?php echo get_ncl_location(); ?>
 					</h2>
@@ -73,8 +74,8 @@
 
 	<footer class="entry-meta">
 
-		<?php if ( !in_category('journal') || raamdev_is_journal_viewable() ) : ?>
-			<?php if( function_exists('indiepub_sharing_buttons') ) : ?>
+		<?php if ( ! in_category( 'journal' ) || raamdev_is_journal_viewable() ) : ?>
+			<?php if ( function_exists( 'indiepub_sharing_buttons' ) ) : ?>
 				<?php indiepub_sharing_buttons(); ?>
 			<?php endif; ?>
 
