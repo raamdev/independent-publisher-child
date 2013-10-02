@@ -20,7 +20,7 @@ if ( post_password_required() )
 	return;
 
 // If this is a journal entry and it's not viewable, don't show comments
-if (!raamdev_is_journal_viewable()) {
+if (in_category('journal') && !raamdev_is_journal_viewable()) {
 	raamdev_journal_not_released_comments_message();
 	return;
 }
