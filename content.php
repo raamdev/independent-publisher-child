@@ -15,7 +15,7 @@
 
 	<?php if ( is_search() ) : // Only display Excerpts for Search ?>
 		<div class="entry-summary">
-			<?php if ( in_category('journal') ) : ?>
+			<?php if ( in_category( 'journal' ) ) : ?>
 
 				<?php if ( raamdev_is_journal_viewable() ) : // Only show excerpts if Journal viewable ?>
 
@@ -30,7 +30,7 @@
 
 			<?php else : // Not a journal entry ?>
 
-				<?php if ('aside' === get_post_format()) : // Do something special for Asides ?>
+				<?php if ( 'aside' === get_post_format() ) : // Do something special for Asides ?>
 
 					<a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php the_content(); ?></a>
 
@@ -45,7 +45,7 @@
 		</div><!-- .entry-summary -->
 	<?php else : ?>
 		<div class="entry-content">
-			<?php if ( in_category('journal') ) : // Journal entry ?>
+			<?php if ( in_category( 'journal' ) ) : // Journal entry ?>
 				<?php if ( raamdev_is_journal_viewable() ) : // Only show content if Journal is viewable ?>
 
 					<?php raamdev_was_journal_entry_message(); ?>
@@ -85,16 +85,7 @@
 
 	<footer class="entry-meta">
 		<?php if ( 'post' == get_post_type() ) : // Hide category and tag text for pages on Search ?>
-			<?php
-			/* translators: used between list items, there is a space after the comma */
-			$categories_list = get_the_category_list( __( ', ', 'independent_publisher' ) );
-			if ( $categories_list && independent_publisher_categorized_blog() ) :
-				?>
-				<span class="cat-links">
-				<?php printf( __( ' in %1$s', 'independent_publisher' ), $categories_list ); ?>
-			</span>
-			<?php endif; // End if categories ?>
-
+			<?php independent_publisher_posted_author_cats() ?>
 		<?php endif; // End if 'post' == get_post_type() ?>
 
 		<?php if ( ! post_password_required() && ( comments_open() || '0' != get_comments_number() ) ) : ?>
