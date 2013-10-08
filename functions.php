@@ -343,11 +343,3 @@ function raamdev_logged_in_menu_items( $nav, $args ) {
 }
 
 add_filter( 'wp_nav_menu_items', 'raamdev_logged_in_menu_items', 10, 2 );
-
-/**
- * Point author links to my about page
- */
-add_filter( 'author_link', 'independent_publisher_single_author_link', 10, 3 );
-function independent_publisher_single_author_link() {
-	return get_home_url() . '/about/';
-}
