@@ -6,9 +6,6 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<?php if ( has_post_thumbnail() ) : ?>
-		<a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( sprintf( __( 'Permalink to %s', 'independent_publisher' ), the_title_attribute( 'echo=0' ) ) ); ?>" rel="bookmark"><?php the_post_thumbnail( array( 700, 700 ) ); ?></a>
-	<?php endif; ?>
 	<header class="entry-header">
 		<h1 class="entry-title">
 			<a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( sprintf( __( 'Permalink to %s', 'independent_publisher' ), the_title_attribute( 'echo=0' ) ) ); ?>" rel="bookmark"><?php the_title(); ?></a>
@@ -52,8 +49,7 @@
 				<?php if ( raamdev_is_journal_viewable() ) : // Only show content if Journal is viewable ?>
 
 					<?php raamdev_was_journal_entry_message(); ?>
-					<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'independent_publisher' ) ); ?>
-					<?php wp_link_pages( array( 'before' => '<div class="page-links">' . __( 'Pages:', 'independent_publisher' ), 'after' => '</div>' ) ); ?>
+					<?php the_excerpt(); ?>
 
 				<?php else : // Show message about why Journal is not viewable ?>
 
@@ -77,8 +73,8 @@
 
 				<?php else : // not an Aside ?>
 
-					<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'independent_publisher' ) ); ?>
-					<?php wp_link_pages( array( 'before' => '<div class="page-links">' . __( 'Pages:', 'independent_publisher' ), 'after' => '</div>' ) ); ?>
+					<?php the_excerpt(); ?>
+
 
 				<?php endif; // if ( 'aside' === get_post_format() ) ?>
 
@@ -93,7 +89,12 @@
 
 		<?php if ( ! post_password_required() && ( comments_open() || '0' != get_comments_number() ) ) : ?>
 			<span class="sep"> | </span>
+			<?php echo independent_publisher_post_word_count() . ' Words '; ?>
+			<span class="sep"> | </span>
 			<span class="comments-link"><?php comments_popup_link( __( 'Comment', 'independent_publisher' ), __( '1 Comment', 'independent_publisher' ), __( '% Comments', 'independent_publisher' ) ); ?></span>
+			<?php if ( 'aside' !== get_post_format() ) : // Do something special for Asides ?>
+				<p style="text-align: right;"><a href="<?php the_permalink(); ?>"><button><?php echo independent_publisher_post_word_count() . ' Words '; ?> →</button></a></p>
+			<?php endif; ?>
 		<?php endif; ?>
 
 		<?php edit_post_link( __( 'Edit', 'independent_publisher' ), '<span class="sep"> | </span><span class="edit-link">', '</span>' ); ?>
