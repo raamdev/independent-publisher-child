@@ -4,9 +4,9 @@
  * @since   Independent Publisher 1.0
  */
 ?>
-<article id="post-<?php the_ID(); ?>" <?php ( independent_publisher_show_full_content_first_post() && ( $wp_query->current_post == 0 && ! is_paged() && is_home() ) ? post_class( 'show-full-content-first-post' ) : post_class() ) ?>>
+<article id="post-<?php the_ID(); ?>" <?php ( independent_publisher_show_full_content_first_post() && ( independent_publisher_is_very_first_standard_post() && is_home() ) ? post_class( 'show-full-content-first-post' ) : post_class() ) ?>>
 	<header class="entry-header">
-		<?php if ( independent_publisher_show_full_content_first_post() && ( $wp_query->current_post == 0 && ! is_paged() && is_home() ) ) : ?>
+		<?php if ( independent_publisher_show_full_content_first_post() && ( independent_publisher_is_very_first_standard_post() && is_home() ) ) : ?>
 			<h2 class="entry-title-meta">
 				<span class="entry-title-meta-author"><?php independent_publisher_posted_author() ?></span> in <?php echo independent_publisher_post_categories( '', TRUE ); ?>
 				<?php if ( function_exists( 'indiepub_spoken_essay_link' ) ) : ?>
@@ -41,13 +41,8 @@
 
 				<?php if ( 'aside' === get_post_format() ) : // Do something special for Asides ?>
 
-					<?php // This creates the same output as the_content() ?>
-					<?php $content = get_the_content(); ?>
-					<?php $content = apply_filters( 'the_content', $content ); ?>
-					<?php $content = str_replace( ']]>', ']]&gt;', $content ); ?>
-
 					<?php // Asides might have footnotes, which don't display properly when linking Asides to themselves, so we strip <sup> here ?>
-					<?php $content = preg_replace( '!<sup\s+id="fnref.*?">.*?</sup>!is', '', $content ); ?>
+					<?php $content = independent_publisher_strip_footnotes( get_the_content() ); ?>
 
 					<a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php echo $content; ?></a>
 
@@ -78,17 +73,12 @@
 
 				<?php if ( 'aside' === get_post_format() ) : // Do something special for Asides ?>
 
-					<?php // This creates the same output as the_content() ?>
-					<?php $content = get_the_content(); ?>
-					<?php $content = apply_filters( 'the_content', $content ); ?>
-					<?php $content = str_replace( ']]>', ']]&gt;', $content ); ?>
-
 					<?php // Asides might have footnotes, which don't display properly when linking Asides to themselves, so we strip <sup> here ?>
-					<?php $content = preg_replace( '!<sup\s+id="fnref.*?">.*?</sup>!is', '', $content ); ?>
+					<?php $content = independent_publisher_strip_footnotes( get_the_content() ); ?>
 
 					<a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title_attribute(); ?>"><?php echo $content; ?></a>
 
-				<?php elseif ( independent_publisher_show_full_content_first_post() && ( $wp_query->current_post == 0 && ! is_paged() ) ) : ?>
+				<?php elseif ( independent_publisher_show_full_content_first_post() && independent_publisher_is_very_first_standard_post() ) : ?>
 
 					<?php if ( has_post_thumbnail() && independent_publisher_show_post_thumbnail() ) : ?>
 						<?php the_post_thumbnail( array( 700, 700 ) ); ?>
@@ -97,7 +87,7 @@
 					<?php wp_link_pages( array( 'before' => '<div class="page-links">' . __( 'Pages:', 'independent_publisher' ), 'after' => '</div>' ) ); ?>
 
 				<?php
-				elseif ( ! get_post_format() && ! is_sticky() &&
+				elseif ( false === get_post_format() && ! is_sticky() &&
 						( independent_publisher_use_post_excerpts() || independent_publisher_use_enhanced_excerpts() )
 				) : // Standard post format
 					?>
@@ -119,32 +109,23 @@
 	<?php endif; ?>
 
 	<footer class="entry-meta">
-		<?php if ( 'post' == get_post_type() && ( independent_publisher_show_full_content_first_post() && ( $wp_query->current_post != 0 || is_paged() ) ) ) : // Hide category for pages on Search and first post when First Post Full Content enabled ?>
+		<?php if ( 'post' == get_post_type() && independent_publisher_is_not_first_post_full_content() ) : // Hide category for pages on Search and first post when First Post Full Content enabled ?>
 			<?php independent_publisher_posted_author_cats() ?>
 		<?php endif; // End if 'post' == get_post_type() ?>
 
-		<?php  if ( ! get_post_format() && independent_publisher_show_post_word_count() && ( independent_publisher_show_full_content_first_post() && ( $wp_query->current_post != 0 || is_paged() ) ) ) : // Only show word count on standard post format ?>
+		<?php  if ( ! get_post_format() && independent_publisher_show_post_word_count() && ( independent_publisher_show_full_content_first_post() && independent_publisher_is_not_first_post_full_content() ) ) : // Only show word count on standard post format ?>
 			<?php echo independent_publisher_get_post_word_count() ?>
 		<?php endif; ?>
 
-		<?php if ( ! post_password_required() && comments_open() && ( independent_publisher_show_full_content_first_post() && ( $wp_query->current_post != 0 || is_paged() ) ) ) : ?>
+		<?php if ( ! post_password_required() && comments_open() && independent_publisher_is_not_first_post_full_content() ) : ?>
 			<span class="sep"> | </span>
 			<span class="comments-link"><?php comments_popup_link( __( 'Comment', 'independent_publisher' ), __( '1 Comment', 'independent_publisher' ), __( '% Comments', 'independent_publisher' ) ); ?></span>
 		<?php endif; ?>
 
-		<?php if ( independent_publisher_show_full_content_first_post() && ( $wp_query->current_post != 0 || is_paged() ) ) : ?>
-			<?php edit_post_link( __( 'Edit', 'independent_publisher' ), '<span class="sep"> | </span><span class="edit-link">', '</span>' ); ?>
-		<?php else : ?>
-			<?php edit_post_link( __( 'Edit', 'independent_publisher' ), '<span class="sep"> | </span><span class="edit-link">', '</span>' ); ?>
-		<?php endif; ?>
+		<?php $edit_link_separator = ( independent_publisher_is_not_first_post_full_content() ? '<span class="sep"> | </span>' : '' ); ?>
+		<?php edit_post_link( __( 'Edit', 'independent_publisher' ), $edit_link_separator . '<span class="edit-link">', '</span>' ); ?>
 
-		<?php if ( ! get_post_format() && independent_publisher_use_enhanced_excerpts() &&
-				( ! independent_publisher_show_full_content_first_post() ||
-						( independent_publisher_show_full_content_first_post() &&
-								( $wp_query->current_post != 0 || is_paged() )
-						)
-				)
-		) : ?>
+		<?php if ( false === get_post_format() && independent_publisher_use_enhanced_excerpts() && independent_publisher_is_not_first_post_full_content() ) : ?>
 			<span class="enhanced-excerpt-read-more"><a class="read-more" href="<?php the_permalink(); ?>"><?php echo __( 'Continue Reading &rarr;' ); ?></a></span>
 		<?php endif; ?>
 	</footer>
