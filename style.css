@@ -71,24 +71,6 @@ and Blueprint http://www.blueprintcss.org/
 	padding-top: 10px !important;
 }
 
-/* Custom styles for the WPaudio plugin */
-
-#audio-player {
-	display: inline;
-}
-
-#audio-player a {
-	color: #b3b3b1 !important;
-	font-size: 13px !important;
-	font-weight: 100 !important;
-	letter-spacing: 1px !important;
-	font-family: "Myriad Pro", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif !important;
-}
-
-#audio-player img {
-	display: none !important;
-}
-
 /* Journal Subscription Option styles */
 
 .subscription-options-option {
