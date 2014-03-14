@@ -1,5 +1,7 @@
 <?php
 
+require_once('functions-overridden.php');
+
 /**
  * We store the RSS Journal Key in a separate file.
  * This key is used to access protected Journal entries
@@ -85,42 +87,48 @@ function raamdev_was_journal_entry_message() {
 	endif;
 }
 
+function unreleased_message( $content ) {
+
+	if( ! in_category('Journal') || raamdev_is_journal_viewable() ) {
+		return $content;
+	}
+	else {
+		return raamdev_journal_not_released_message();
+	}
+}
+
+//Insert function using a filter
+add_filter('the_content','unreleased_message');
+add_filter('the_excerpt','unreleased_message');
+
+
 /**
  * Returns message about journal not released yet
  */
 function raamdev_journal_not_released_message() {
-	?>
 
-	<?php $post_id = get_the_ID(); ?>
-	<style type="text/css">
-		<?php echo '#post-' . $post_id . ' header'; ?>
-		{
-			opacity: 0.5
-		;
-		}
-	</style>
-	<div id="journal-notice">
-		<p>This journal entry has not been released into the public domain and is currently only available through a subscription to the
-			<a href="http://raamdev.com/about/journal/">Journal</a> or a
-			<a href="/about/journal/#one_time_donation">one-time donation</a>.</p>
-		<?php if ( is_user_logged_in() ) {
-			?>
-			<p>Since you're already logged in, you can
-				<a href="/account/modification/">upgrade now</a> to receive access to this entry.</p>
-		<?php
-		}
-		else {
-			?>
-			<p>If you have an active subscription to the Journal, please
-				<a href="https://raamdev.com/wordpress/wp-login.php">login</a> to access this entry (you may need to
-				<a href="https://raamdev.com/wordpress/wp-login.php?action=lostpassword">reset your password</a> first).
-			</p>
-			<p><a href="/subscriptions/">
+	$post_id = get_the_ID();
+
+	$html = '<style type="text/css">#post-' . $post_id . ' header { opacity: 0.5; }</style>';
+	$html .= '<div id="journal-notice">
+				<p>This journal entry has not been released into the public domain and is currently only available through a subscription to the
+				<a href="http://raamdev.com/about/journal/">Journal</a> or a
+				<a href="/about/journal/#one_time_donation">one-time donation</a>.</p>';
+	if ( is_user_logged_in() ) {
+		$html .= '<p>Since you\'re already logged in, you can <a href="/account/modification/">upgrade now</a> to receive access to this entry.</p>';
+	}
+	else {
+		$html .= '<p>If you have an active subscription to the Journal, please
+					<a href="https://raamdev.com/wordpress/wp-login.php">login</a> to access this entry (you may need to
+					<a href="https://raamdev.com/wordpress/wp-login.php?action=lostpassword">reset your password</a> first).
+					</p>
+					<p><a href="/subscriptions/">
 					<button>View Subscription Options</button>
-				</a></p>
-		<?php } ?>
-	</div>
-<?php
+					</a></p>';
+	}
+	$html .= '</div>';
+
+	return $html;
 }
 
 /**
@@ -343,3 +351,16 @@ function raamdev_logged_in_menu_items( $nav, $args ) {
 }
 
 add_filter( 'wp_nav_menu_items', 'raamdev_logged_in_menu_items', 10, 2 );
+
+
+/**
+ * Hide the Comment Form if Journal is not viewable
+ */
+add_filter( 'comments_open', 'raamdev_comments_open', 10, 2 );
+function raamdev_comments_open( $open, $post_id ) {
+
+	if ( in_category( 'journal', $post_id) && ! raamdev_is_journal_viewable() )
+		$open = false;
+
+	return $open;
+}

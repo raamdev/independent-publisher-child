@@ -30,11 +30,6 @@ and Blueprint http://www.blueprintcss.org/
  * Contains CSS for modifying plugin styles
  */
 
-/* Subscribe to Comments (Subscribe to Comments Reloaded Plugin) */
-
-.comment-form-subscriptions p {
-	padding-bottom: 2px;
-}
 
 /* Custom styles for the Snazzy Archives plugin */
 .sz_year {
@@ -82,10 +77,4 @@ and Blueprint http://www.blueprintcss.org/
 	background: #eee;
 	padding: 30px 30px 10px 30px;
 	border-radius: 5px;
-}
-
-@media only screen and (max-width : 1200px) {
-	.menu-space-separator {
-		display: none !important;
-	}
 }
