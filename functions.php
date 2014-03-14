@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Parent-theme functions overridden by this Child Theme
+ */
 require_once('functions-overridden.php');
 
 /**
@@ -73,34 +76,38 @@ function raamdev_is_journal_viewable() {
 }
 
 /**
- * Returns message about journal release
+ * Returns message about journal entry released from paywall
  */
 function raamdev_was_journal_entry_message() {
-	// only show this message if the user is not logged in or doesn't have access
-	if ( ! is_user_logged_in() || ! current_user_can( "access_s2member_level1" ) ) :
-		?>
-		<div style="font-size: 80%; border: 1px solid #eee; padding: 20px; margin-bottom: 20px; line-height: 1.4em; background: #eee;">This is an entry from my
-			<a href="http://raamdev.com/about/journal/">personal Journal</a> and it was published over one year ago. It was initially only available to paying subscribers. However, as per my
-			<a href="http://raamdev.com/income-ethics-series/#public_domain">Income Ethics</a>, "all non-free creative work will be made public domain within one year". So, after spending one year behind a paywall, this content is now free. Ah, sweet freedom!
-		</div>
-	<?php
-	endif;
+
+	$html = '<div style="font-size: 80%; border: 1px solid #eee; padding: 20px; margin-bottom: 20px; line-height: 1.4em; background: #eee;">This is an entry from my
+		<a href="http://raamdev.com/about/journal/">personal Journal</a> and it was published over one year ago. It was initially only available to paying subscribers. However, as per my
+		<a href="http://raamdev.com/income-ethics-series/#public_domain">Income Ethics</a>, "all non-free creative work will be made public domain within one year". So, after spending one year behind a paywall, this content is now free. Ah, sweet freedom!
+	</div>';
+
+	return $html;
 }
 
-function unreleased_message( $content ) {
-
-	if( ! in_category('Journal') || raamdev_is_journal_viewable() ) {
-		return $content;
+/**
+ * Returns the appropriate content when showing a Journal entry
+ */
+function raamdev_the_content() {
+	if ( in_category( 'Journal' ) && raamdev_is_journal_viewable() ) {
+		if ( ! is_user_logged_in() || ! current_user_can( "access_s2member_level1" ) ) {
+			echo raamdev_was_journal_entry_message();
+			the_content();
+		}
+		else {
+			the_content();
+		}
+	}
+	elseif ( in_category( 'Journal' ) && ! raamdev_is_journal_viewable() ) {
+		echo raamdev_journal_not_released_message();
 	}
 	else {
-		return raamdev_journal_not_released_message();
+		the_content();
 	}
 }
-
-//Insert function using a filter
-add_filter('the_content','unreleased_message');
-add_filter('the_excerpt','unreleased_message');
-
 
 /**
  * Returns message about journal not released yet
@@ -351,16 +358,3 @@ function raamdev_logged_in_menu_items( $nav, $args ) {
 }
 
 add_filter( 'wp_nav_menu_items', 'raamdev_logged_in_menu_items', 10, 2 );
-
-
-/**
- * Hide the Comment Form if Journal is not viewable
- */
-add_filter( 'comments_open', 'raamdev_comments_open', 10, 2 );
-function raamdev_comments_open( $open, $post_id ) {
-
-	if ( in_category( 'journal', $post_id) && ! raamdev_is_journal_viewable() )
-		$open = false;
-
-	return $open;
-}
