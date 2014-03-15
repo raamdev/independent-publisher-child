@@ -19,20 +19,22 @@ get_header(); ?>
 
 			<?php if ( have_posts() ) : ?>
 
+				<?php if ( is_home() && ! current_user_can("access_s2member_level1") ) : ?>
+
+					<?php query_posts($query_string . '&cat=-921'); ?>
+
+				<?php endif; ?>
+
 				<?php /* Start the Loop */ ?>
 				<?php while ( have_posts() ) : the_post(); ?>
 
-					<?php if ( is_home() && ( ! in_category( 'journal') || in_category( 'journal') && current_user_can("access_s2member_level1") ) ) : ?>
-
-						<?php
-						/* Include the Post-Format-specific template for the content.
-						 * If you want to override this in a child theme then include a file
-						 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-						 */
-						get_template_part( 'content', get_post_format() );
-						?>
-
-					<?php endif; ?>
+					<?php
+					/* Include the Post-Format-specific template for the content.
+					 * If you want to override this in a child theme then include a file
+					 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
+					 */
+					get_template_part( 'content', get_post_format() );
+					?>
 
 				<?php endwhile; ?>
 
