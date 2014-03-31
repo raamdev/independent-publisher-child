@@ -164,11 +164,11 @@ add_filter( 'tmac_hide_twitter_handle', 'tmac_hide_twitter_handle' );
  */
 function raamdev_rss_filter_post_formats( &$wp_query ) {
 	if ( $wp_query->is_feed() ) {
-		if ( isset( $wp_query->query_vars['rss-post-format-aside'] ) ) { // Only return Asides
+		if ( isset( $wp_query->query_vars['rss-post-format-aside'] ) ) { // Only return Asides and Quotes
 			$post_format_tax_query = array(
 				'taxonomy' => 'post_format',
 				'field'    => 'slug',
-				'terms'    => 'post-format-aside',
+				'terms'    => array('post-format-aside', 'post-format-quote'),
 				'operator' => 'IN'
 			);
 			$tax_query             = $wp_query->get( 'tax_query' );
@@ -202,7 +202,7 @@ function raamdev_rss_filter_post_formats( &$wp_query ) {
 			$post_format_tax_query = array(
 				'taxonomy' => 'post_format',
 				'field'    => 'slug',
-				'terms'    => array( 'post-format-aside', 'post-format-image' ),
+				'terms'    => array( 'post-format-aside', 'post-format-image', 'post-format-quote' ),
 				'operator' => 'NOT IN'
 			);
 			$tax_query             = $wp_query->get( 'tax_query' );
