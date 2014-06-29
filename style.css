@@ -79,3 +79,7 @@ and Blueprint http://www.blueprintcss.org/
 	border-radius: 5px;
 	margin-bottom: 20px;
 }
+
+blockquote cite:before {
+	content: "";
+}
