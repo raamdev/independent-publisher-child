@@ -1,11 +1,6 @@
 <?php
 
 /**
- * Parent-theme functions overridden by this Child Theme
- */
-require_once('functions-overridden.php');
-
-/**
  * We store the RSS Journal Key in a separate file.
  * This key is used to access protected Journal entries
  * via RSS and allows us to give MailChimp an RSS URL
