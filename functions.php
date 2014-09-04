@@ -1,14 +1,6 @@
 <?php
 
 /**
- * We store the RSS Journal Key in a separate file.
- * This key is used to access protected Journal entries
- * via RSS and allows us to give MailChimp an RSS URL
- * for RSS-to-Email campaigns for Journal subscribers.
- */
-require_once( WP_CONTENT_DIR . '/private/rss-journal-key.php' );
-
-/**
  * Returns recent posts for given category and excludes given post formats
  */
 function raamdev_get_recent_posts( $number_posts = '10', $category = '', $exclude_formats = array() ) {
@@ -57,92 +49,6 @@ function indiepub_sharing_buttons_tweet_text( $tweet_text ) {
 }
 
 add_filter( 'indiepub_sharing_buttons_tweet_text', 'indiepub_sharing_buttons_tweet_text' );
-
-/**
- * Returns true if post is more than 1 year old or user has access, otherwise returns false
- */
-function raamdev_is_journal_viewable() {
-	$release_after = 365 * 86400; // days * seconds per day
-	$post_age      = date( 'U' ) - get_post_time( 'U' );
-	if ( $post_age > $release_after || current_user_can( "access_s2member_level1" ) )
-		return TRUE;
-	else
-		return FALSE;
-}
-
-/**
- * Returns message about journal entry released from paywall
- */
-function raamdev_was_journal_entry_message() {
-
-	$html = '<div style="font-size: 80%; border: 1px solid #eee; padding: 20px; margin-bottom: 20px; line-height: 1.4em; background: #eee;">This is an entry from my
-		<a href="http://raamdev.com/about/journal/">personal Journal</a> and it was published over one year ago. It was initially only available to paying subscribers. However, as per my
-		<a href="http://raamdev.com/income-ethics-series/#public_domain">Income Ethics</a>, "all non-free creative work will be made public domain within one year". So, after spending one year behind a paywall, this content is now free. Ah, sweet freedom!
-	</div>';
-
-	return $html;
-}
-
-/**
- * Returns the appropriate content when showing a Journal entry
- */
-function raamdev_the_content() {
-	if ( in_category( 'Journal' ) && raamdev_is_journal_viewable() ) {
-		if ( ! is_user_logged_in() || ! current_user_can( "access_s2member_level1" ) ) {
-			echo raamdev_was_journal_entry_message();
-			the_content();
-		}
-		else {
-			the_content();
-		}
-	}
-	elseif ( in_category( 'Journal' ) && ! raamdev_is_journal_viewable() ) {
-		echo raamdev_journal_not_released_message();
-	}
-	else {
-		the_content();
-	}
-}
-
-/**
- * Returns message about journal not released yet
- */
-function raamdev_journal_not_released_message() {
-
-	$post_id = get_the_ID();
-
-	$html = '<style type="text/css">#post-' . $post_id . ' header { opacity: 0.5; }</style>';
-	$html .= '<div id="journal-notice">
-				<p>This journal entry has not been released into the public domain and is currently only available through a subscription to the
-				<a href="http://raamdev.com/about/journal/">Journal</a> or a
-				<a href="/about/journal/#one_time_donation">one-time donation</a>.</p>';
-	if ( is_user_logged_in() ) {
-		$html .= '<p>Since you\'re already logged in, you can <a href="/account/modification/">upgrade now</a> to receive access to this entry.</p>';
-	}
-	else {
-		$html .= '<p>If you have an active subscription to the Journal, please
-					<a href="https://raamdev.com/wordpress/wp-login.php">login</a> to access this entry (you may need to
-					<a href="https://raamdev.com/wordpress/wp-login.php?action=lostpassword">reset your password</a> first).
-					</p>
-					<p><a href="/subscriptions/">
-					<button>View Subscription Options</button>
-					</a></p>';
-	}
-	$html .= '</div>';
-
-	return $html;
-}
-
-/**
- * Returns message about journal not released yet
- */
-function raamdev_journal_not_released_comments_message() {
-	?>
-	<div id="journal-notice-comments">
-		<p><strong>Comments are hidden.</strong></p>
-	</div>
-<?php
-}
 
 /*
  * Hide the Twitter handle when adding mentions to posts
@@ -214,19 +120,6 @@ function raamdev_rss_filter_post_formats( &$wp_query ) {
 
 add_action( 'pre_get_posts', 'raamdev_rss_filter_post_formats' );
 
-/**
- * Filter journal entries from RSS feeds, except when using secret URL
- */
-add_action( 'pre_get_posts', 'raamdev_rss_filter_journal' );
-function raamdev_rss_filter_journal( &$wp_query ) {
-
-	if ( $wp_query->is_feed() && ! isset( $wp_query->query_vars[RSS_JOURNAL_KEY] ) ) {
-		$wp_query->set( 'category__not_in', '921' );
-	}
-	else if ( $wp_query->is_feed() && isset( $wp_query->query_vars[RSS_JOURNAL_KEY] ) ) {
-		$wp_query->set( 'category__in', '921' );
-	}
-}
 
 /**
  * Query vars used for filtering RSS feeds
@@ -235,7 +128,6 @@ function raamdev_add_query_vars( $aVars ) {
 	$aVars[] = "rss-post-format-aside";
 	$aVars[] = "rss-post-format-image";
 	$aVars[] = "rss-post-format-standard";
-	$aVars[] = RSS_JOURNAL_KEY;
 	return $aVars;
 }
 
@@ -256,15 +148,6 @@ function raamdev_rss_change_title() {
 }
 
 add_filter( 'wp_title_rss', 'raamdev_rss_change_title', 1 );
-
-/**
- * Redirect the registration form to a specific page after submission
- */
-function __my_registration_redirect() {
-	return home_url( '/please-confirm-subscription/' );
-}
-
-add_filter( 'registration_redirect', '__my_registration_redirect' );
 
 /**
  * Add custom styles for login form (brings entire form up to accommodate for custom header logo)
