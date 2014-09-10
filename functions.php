@@ -247,7 +247,7 @@ add_filter( 'wp_nav_menu_items', 'raamdev_logged_in_menu_items', 10, 2 );
 function raamdev_link_library_tooltips() {
 	global $post;
 	if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'link-library') ) {
-		wp_enqueue_script( 'link-library-tooltips', get_template_directory_uri() . '/link-library-tooltips.js', array(), '1.0.0', true );
+		wp_enqueue_script( 'link-library-tooltips', get_stylesheet_directory_uri() . '/link-library-tooltips.js', array(), '1.0.0', true );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'raamdev_link_library_tooltips');
