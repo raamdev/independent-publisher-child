@@ -150,15 +150,6 @@ function raamdev_rss_change_title() {
 add_filter( 'wp_title_rss', 'raamdev_rss_change_title', 1 );
 
 /**
- * Add custom styles for login form (brings entire form up to accommodate for custom header logo)
- */
-function raamdev_my_login_css() {
-	echo '<style type="text/css">#login { padding: 15px 0 0; margin: auto; } .login h1 a { padding-bottom: 0px; }</style>';
-}
-
-add_action( 'login_head', 'raamdev_my_login_css' );
-
-/**
  * Allow Custom MIME Types to be uploaded via WordPress Media Library
  */
 function raamdev_custom_mime_media_types( $mimes ) {
