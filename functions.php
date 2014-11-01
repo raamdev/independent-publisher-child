@@ -1,16 +1,18 @@
 <?php
 
-/**
+/*
  * Returns recent posts for given category and excludes given post formats
  */
 function raamdev_get_recent_posts( $number_posts = '10', $category = '', $exclude_formats = array() ) {
+
+	$tax_query = array();
 
 	// Make sure category exists
 	if ( ! get_cat_ID( $category ) ) {
 		return FALSE;
 	}
 
-	// Build array of format exclution queries
+	// Build array of format exclusion queries
 	if ( ! empty( $exclude_formats ) ) :
 		$i         = 0;
 		$tax_query = array();
@@ -62,6 +64,7 @@ add_filter( 'tmac_hide_twitter_handle', 'tmac_hide_twitter_handle' );
 
 /**
  * Filter post formats from RSS feed
+ * @var $wp_query WP_Query Reference for IDEs.
  */
 function raamdev_rss_filter_post_formats( &$wp_query ) {
 	if ( $wp_query->is_feed() ) {
@@ -121,7 +124,7 @@ function raamdev_rss_filter_post_formats( &$wp_query ) {
 add_action( 'pre_get_posts', 'raamdev_rss_filter_post_formats' );
 
 
-/**
+/*
  * Query vars used for filtering RSS feeds
  */
 function raamdev_add_query_vars( $aVars ) {
@@ -133,7 +136,7 @@ function raamdev_add_query_vars( $aVars ) {
 
 add_filter( 'query_vars', 'raamdev_add_query_vars' );
 
-/**
+/*
  * Changes the RSS feed title to rename specific post formats
  */
 function raamdev_rss_change_title() {
@@ -149,7 +152,7 @@ function raamdev_rss_change_title() {
 
 add_filter( 'wp_title_rss', 'raamdev_rss_change_title', 1 );
 
-/**
+/*
  * Allow Custom MIME Types to be uploaded via WordPress Media Library
  */
 function raamdev_custom_mime_media_types( $mimes ) {
@@ -161,10 +164,13 @@ function raamdev_custom_mime_media_types( $mimes ) {
 
 add_filter( 'upload_mimes', 'raamdev_custom_mime_media_types' );
 
-/**
+/*
  * Shortcode for including Static HTML Files in posts
  */
 function raamdev_sc_static_html( $atts ) {
+
+	$file = NULL;
+	$subdir = NULL;
 
 	// Extract Shortcode Parameters/Attributes
 	extract( shortcode_atts( array(
@@ -193,7 +199,7 @@ FILE = " . $file . "
 
 add_shortcode( 'static_html', 'raamdev_sc_static_html' );
 
-/**
+/*
  * Return the full permalink instead of the shortlink.
  * Prefer the full permalink over the shortlink so the domain (raamdev.com)
  * appears in the URL when social sites pull page metadata (as opposed to
@@ -206,7 +212,7 @@ function raamdev_custom_shortlink() {
 
 add_filter( 'get_shortlink', 'raamdev_custom_shortlink' );
 
-/**
+/*
  * Add "My Account" and "Logout" menu items to nav menu when logged in
  *
  * @param $nav
@@ -242,3 +248,47 @@ function raamdev_link_library_tooltips() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'raamdev_link_library_tooltips');
+
+/*
+ * Use a custom image for og:image meta tag when post has no image
+ */
+function raamdev_custom_image( $media, $post_id, $args ) {
+	if ( $media ) {
+		return $media;
+	} else {
+		$permalink = get_permalink( $post_id );
+		$url = apply_filters( 'jetpack_photon_url', 'https://s3.amazonaws.com/cdn.raamdev.com/wordpress/wp-content/uploads/2014/03/raam_2014-01-orig.jpg' );
+
+		return array( array(
+			              'type'  => 'image',
+			              'from'  => 'custom_fallback',
+			              'src'   => esc_url( $url ),
+			              'href'  => $permalink,
+		              ) );
+	}
+}
+add_filter( 'jetpack_images_get_images', 'raamdev_custom_image', 10, 3 );
+
+/*
+ * Use a custom image for og:image on home page
+ */
+function raamdev_home_image( $tags ) {
+	if ( is_home() || is_front_page() ) {
+		// Remove the default blank image added by Jetpack
+		unset( $tags['og:image'] );
+
+		$raamdev_home_img = 'https://s3.amazonaws.com/cdn.raamdev.com/wordpress/wp-content/uploads/2014/03/raam_2014-01-orig.jpg';
+		$tags['og:image'] = esc_url( $raamdev_home_img );
+	}
+	return $tags;
+}
+add_filter( 'jetpack_open_graph_tags', 'raamdev_home_image' );
+
+/*
+ * Use @raamdev for twitter:site meta tag (instead of default @jetpack)
+ */
+function tweakjp_custom_twitter_site( $og_tags ) {
+	$og_tags['twitter:site'] = '@raamdev';
+	return $og_tags;
+}
+add_filter( 'jetpack_open_graph_tags', 'tweakjp_custom_twitter_site', 11 );
