@@ -257,7 +257,7 @@ function raamdev_custom_image( $media, $post_id, $args ) {
 		return $media;
 	} else {
 		$permalink = get_permalink( $post_id );
-		$url = apply_filters( 'jetpack_photon_url', 'https://s3.amazonaws.com/s3.raam.org/wordpress/wp-content/uploads/2015/03/raam_2015-03-16_state-forest-banner.png' );
+		$url = apply_filters( 'jetpack_photon_url', 'https://s3.amazonaws.com/s3.raam.org/wordpress/wp-content/uploads/2015/03/raam_2015-03-16_state-forest-banner-light.png' );
 
 		return array( array(
 			              'type'  => 'image',
@@ -277,7 +277,7 @@ function raamdev_home_image( $tags ) {
 		// Remove the default blank image added by Jetpack
 		unset( $tags['og:image'] );
 
-		$raamdev_home_img = 'https://s3.amazonaws.com/s3.raam.org/wordpress/wp-content/uploads/2015/03/raam_2015-03-16_state-forest-banner.png';
+		$raamdev_home_img = 'https://s3.amazonaws.com/s3.raam.org/wordpress/wp-content/uploads/2015/03/raam_2015-03-16_state-forest-banner-light.png';
 		$tags['og:image'] = esc_url( $raamdev_home_img );
 	}
 	return $tags;
