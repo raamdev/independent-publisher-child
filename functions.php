@@ -257,7 +257,7 @@ function raamdev_custom_image( $media, $post_id, $args ) {
 		return $media;
 	} else {
 		$permalink = get_permalink( $post_id );
-		$url = apply_filters( 'jetpack_photon_url', 'https://s3.amazonaws.com/cdn.raamdev.com/wordpress/wp-content/uploads/2014/03/raam_2014-01-orig.jpg' );
+		$url = apply_filters( 'jetpack_photon_url', 'https://s3.amazonaws.com/s3.raam.org/wordpress/wp-content/uploads/2015/03/raam_2015-03-16_state-forest-banner.png' );
 
 		return array( array(
 			              'type'  => 'image',
@@ -277,7 +277,7 @@ function raamdev_home_image( $tags ) {
 		// Remove the default blank image added by Jetpack
 		unset( $tags['og:image'] );
 
-		$raamdev_home_img = 'https://s3.amazonaws.com/cdn.raamdev.com/wordpress/wp-content/uploads/2014/03/raam_2014-01-orig.jpg';
+		$raamdev_home_img = 'https://s3.amazonaws.com/s3.raam.org/wordpress/wp-content/uploads/2015/03/raam_2015-03-16_state-forest-banner.png';
 		$tags['og:image'] = esc_url( $raamdev_home_img );
 	}
 	return $tags;
@@ -285,10 +285,11 @@ function raamdev_home_image( $tags ) {
 add_filter( 'jetpack_open_graph_tags', 'raamdev_home_image' );
 
 /*
- * Use @raamdev for twitter:site meta tag (instead of default @jetpack)
+ * Use custom twitter metadata instead of Jetpack defaults
  */
-function tweakjp_custom_twitter_site( $og_tags ) {
+function tweakjp_custom_twitter_metadata( $og_tags ) {
 	$og_tags['twitter:site'] = '@raamdev';
+	$og_tags['twitter:card'] = 'summary_large_image';
 	return $og_tags;
 }
-add_filter( 'jetpack_open_graph_tags', 'tweakjp_custom_twitter_site', 11 );
+add_filter( 'jetpack_open_graph_tags', 'tweakjp_custom_twitter_metadata', 11 );
