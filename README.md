@@ -1,4 +1,4 @@
- Child Theme for raamdev.com
+ Child Theme for raam.org
 ===========================
 
-This is the [Independent Publisher](http://independentpublisher.me) Child Theme used on [raamdev.com](http://raamdev.com).
+This is the [Independent Publisher](http://independentpublisher.me) Child Theme used on [raam.org](https://raam.org).
