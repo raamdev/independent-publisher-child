@@ -83,3 +83,9 @@ and Blueprint http://www.blueprintcss.org/
 blockquote cite:before {
 	content: "";
 }
+
+.format-aside {
+    font-size: inherit;
+    font-style: inherit;
+    line-height: inherit;
+}
