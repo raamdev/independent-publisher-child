@@ -84,8 +84,24 @@ blockquote cite:before {
 	content: "";
 }
 
+/* Simplify Aside Post Format; makes the text look like regular posts */
 .format-aside {
     font-size: inherit;
     font-style: inherit;
     line-height: inherit;
+}
+
+body.single-format-aside .entry-header,
+body.single-format-aside .post-author-bottom,
+body.single-format-aside .entry-meta,
+body.single-format-aside .comments-area,
+body.single-format-aside #further-reading,
+body.single-format-aside #taglist,
+body.single-format-aside .widget-area,
+body.single-format-aside .site-footer,
+body.single-format-aside #respond {
+    -webkit-transition: opacity 0.5s ease-out 0.1s;
+    -moz-transition: opacity 0.5s ease-out 0.1s;
+    transition: opacity 0.5s ease-out 0.1s;
+    opacity:0;
 }

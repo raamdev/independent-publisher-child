@@ -293,3 +293,9 @@ function tweakjp_custom_twitter_metadata( $og_tags ) {
 	return $og_tags;
 }
 add_filter( 'jetpack_open_graph_tags', 'tweakjp_custom_twitter_metadata', 11 );
+
+function raamdev_clean_single_format_asides() {
+    if(is_single() && get_post_format() === 'aside')
+        wp_enqueue_script( 'clean-single-format-asides', get_stylesheet_directory_uri() . '/clean-single-format-asides.js', array('jquery'), '20150524' );
+}
+add_action( 'wp_enqueue_scripts', 'raamdev_clean_single_format_asides');
