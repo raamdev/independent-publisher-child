@@ -91,16 +91,24 @@ blockquote cite:before {
     line-height: inherit;
 }
 
-.format-aside .entry-content {
+.single .format-aside .entry-content,
+.single .format-quote .entry-content {
   margin-top: 6em;
   margin-bottom: 6em;
   padding-bottom: 0;
 }
 
 @media only screen and (max-width: 500px) {
-  .format-aside .entry-content {
+  .single .format-aside .entry-content,
+  .single .format-quote .entry-content {
     margin-top: 6em;
     margin-bottom: 6em;
     padding-bottom: 0;
   }
+}
+
+/* Lighten the default border color that separates entries */
+
+.blog article, .archive article, .search article {
+  border-bottom: solid 1px #F5F5F5;
 }
