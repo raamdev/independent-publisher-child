@@ -91,17 +91,16 @@ blockquote cite:before {
     line-height: inherit;
 }
 
-body.single-format-aside .entry-header,
-body.single-format-aside .post-author-bottom,
-body.single-format-aside .entry-meta,
-body.single-format-aside .comments-area,
-body.single-format-aside #further-reading,
-body.single-format-aside #taglist,
-body.single-format-aside .widget-area,
-body.single-format-aside .site-footer,
-body.single-format-aside #respond {
-    -webkit-transition: opacity 0.5s ease-out 0.1s;
-    -moz-transition: opacity 0.5s ease-out 0.1s;
-    transition: opacity 0.5s ease-out 0.1s;
-    opacity:0;
+.format-aside .entry-content {
+  margin-top: 6em;
+  margin-bottom: 6em;
+  padding-bottom: 0;
+}
+
+@media only screen and (max-width: 500px) {
+  .format-aside .entry-content {
+    margin-top: 6em;
+    margin-bottom: 6em;
+    padding-bottom: 0;
+  }
 }
