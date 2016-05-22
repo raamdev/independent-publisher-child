@@ -298,8 +298,8 @@ add_filter( 'jetpack_open_graph_tags', 'tweakjp_custom_twitter_metadata', 11 );
  * Use a custom image for og:image on home page
  */
 function raamdev_category_prefix() {
-    if ( !in_category( 'journal' ) ) {
-        return 'on'; // Change category prefix to 'on' instead of 'in', e.g., "Raam Dev on Writing & Publishing"
+    if ( is_single() && !in_category( 'journal' ) ) {
+        return 'on'; // Change category prefix to 'on' instead of 'in' on Single Posts, e.g., "Raam Dev on Writing & Publishing"
     } else {
         return 'in';
     }
