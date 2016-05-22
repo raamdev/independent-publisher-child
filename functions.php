@@ -267,7 +267,7 @@ function raamdev_custom_image( $media, $post_id, $args ) {
 		              ) );
 	}
 }
-add_filter( 'jetpack_images_get_images', 'raamdev_custom_image', 10, 3 );
+//add_filter( 'jetpack_images_get_images', 'raamdev_custom_image', 10, 3 );
 
 /*
  * Use a custom image for og:image on home page
@@ -282,7 +282,7 @@ function raamdev_home_image( $tags ) {
 	}
 	return $tags;
 }
-add_filter( 'jetpack_open_graph_tags', 'raamdev_home_image' );
+//add_filter( 'jetpack_open_graph_tags', 'raamdev_home_image' );
 
 /*
  * Use custom twitter metadata instead of Jetpack defaults
