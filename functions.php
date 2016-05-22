@@ -293,3 +293,15 @@ function tweakjp_custom_twitter_metadata( $og_tags ) {
 	return $og_tags;
 }
 add_filter( 'jetpack_open_graph_tags', 'tweakjp_custom_twitter_metadata', 11 );
+
+/*
+ * Use a custom image for og:image on home page
+ */
+function raamdev_category_prefix() {
+    if ( !in_category( 'journal' ) ) {
+        return 'on'; // Change category prefix to 'on' instead of 'in', e.g., "Raam Dev on Writing & Publishing"
+    } else {
+        return 'in';
+    }
+}
+add_filter('independent_publisher_entry_meta_category_prefix', 'raamdev_category_prefix');
