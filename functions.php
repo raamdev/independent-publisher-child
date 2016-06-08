@@ -257,7 +257,7 @@ function raamdev_custom_image( $media, $post_id, $args ) {
 		return $media;
 	} else {
 		$permalink = get_permalink( $post_id );
-		$url = apply_filters( 'jetpack_photon_url', 'https://s3.amazonaws.com/s3.raam.org/wordpress/wp-content/uploads/2015/03/raam_2015-03-16_state-forest-banner-light.png' );
+		$url = apply_filters( 'jetpack_photon_url', 'https://secure.gravatar.com/avatar/a058cfca65a5103e838b1d0ea077ca4b?s=400&r=g' );
 
 		return array( array(
 			              'type'  => 'image',
@@ -267,7 +267,7 @@ function raamdev_custom_image( $media, $post_id, $args ) {
 		              ) );
 	}
 }
-//add_filter( 'jetpack_images_get_images', 'raamdev_custom_image', 10, 3 );
+add_filter( 'jetpack_images_get_images', 'raamdev_custom_image', 10, 3 );
 
 /*
  * Use a custom image for og:image on home page
@@ -277,19 +277,19 @@ function raamdev_home_image( $tags ) {
 		// Remove the default blank image added by Jetpack
 		unset( $tags['og:image'] );
 
-		$raamdev_home_img = 'https://s3.amazonaws.com/s3.raam.org/wordpress/wp-content/uploads/2015/03/raam_2015-03-16_state-forest-banner-light.png';
+		$raamdev_home_img = 'https://secure.gravatar.com/avatar/a058cfca65a5103e838b1d0ea077ca4b?s=400&r=g';
 		$tags['og:image'] = esc_url( $raamdev_home_img );
 	}
 	return $tags;
 }
-//add_filter( 'jetpack_open_graph_tags', 'raamdev_home_image' );
+add_filter( 'jetpack_open_graph_tags', 'raamdev_home_image' );
 
 /*
  * Use custom twitter metadata instead of Jetpack defaults
  */
 function tweakjp_custom_twitter_metadata( $og_tags ) {
 	$og_tags['twitter:site'] = '@raamdev';
-	$og_tags['twitter:card'] = 'summary_large_image';
+	$og_tags['twitter:card'] = 'summary';
 	return $og_tags;
 }
 add_filter( 'jetpack_open_graph_tags', 'tweakjp_custom_twitter_metadata', 11 );
