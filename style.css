@@ -112,3 +112,10 @@ blockquote cite:before {
 .blog article, .archive article, .search article {
   border-bottom: solid 1px #F5F5F5;
 }
+
+/* Re-add the space that's removed from the top of the first post (doesn't look right with Asides) */
+
+article.first-post {
+  margin-top: auto;
+  padding-top: 40px;
+}
