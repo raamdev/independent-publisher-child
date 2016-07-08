@@ -119,3 +119,9 @@ article.first-post {
   margin-top: auto;
   padding-top: 40px;
 }
+
+/* Decrease size and letter spacing of entry title meta, e.g., "Raam Dev in Journal" */
+.entry-title-meta {
+  font-size: 12px;
+  letter-spacing : 0;
+}
