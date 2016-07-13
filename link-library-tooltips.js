@@ -1,4 +1,26 @@
-/* Used for the Link Library plugin to show the link description as a tooltip when hovering over the link. */
+/* This is the JavaScript used for the Link Library plugin to show the link description 
+ * as a tooltip when hovering over the link. 
+ *
+ * In Library Settings → Advanced, the Link Name should be wrapped in the following:
+ * <span onmouseover='tooltip.show(this.parentNode)' onmouseout='tooltip.hide();'> </span> 
+ *
+ * Link Description should be wrapped in the following:
+ * <div style='display:none' id='tooltip'> </div>
+ *
+ * Place link-library-tooltips.js in the Child Theme directory and then use the following in
+ * functions.php file to load the JavaScript:
+ 
+	 function raamdev_link_library_tooltips() {
+		global $post;
+		if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'link-library') ) {
+			wp_enqueue_script( 'link-library-tooltips', get_stylesheet_directory_uri() . '/link-library-tooltips.js', array(), '1.0.0', true );
+		}
+	 }
+	 add_action( 'wp_enqueue_scripts', 'raamdev_link_library_tooltips');
+ *
+ * See also the custom stylesheet (should replace everything inside Link Library → Style Sheet):
+ * https://gist.github.com/raamdev/25eaf22080955154dc5385187712b3d7
+ */
 var tooltip=function(){
 	var id = 'tt';
 	var top = 3;
