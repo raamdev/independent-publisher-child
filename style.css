@@ -125,3 +125,12 @@ article.first-post {
   font-size: 12px;
   letter-spacing : 0;
 }
+
+/* Don't style links in Trackbacks or Pingbacks; I'd rather these not stand out.
+   (.webmention p a {} is intentionally left out here as Webmentions contain minimal formatting
+*/
+.trackback p a,
+.pingback p a {
+  color: black;
+  text-decoration: none;
+}
