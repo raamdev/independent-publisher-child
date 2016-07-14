@@ -305,3 +305,16 @@ function raamdev_category_prefix() {
     }
 }
 add_filter('independent_publisher_entry_meta_category_prefix', 'raamdev_category_prefix');
+
+/*
+ * Override this function to add a class to the anchor so that we can adjust the style in style.css
+ */
+function independent_publisher_posted_on_date() {
+    printf(
+        '<a href="%1$s" title="%2$s" rel="bookmark" class="entry-title-meta-post-date-permalink"><time class="entry-date dt-published" datetime="%3$s" itemprop="datePublished" pubdate="pubdate">%4$s</time></a>',
+        esc_url( get_permalink() ),
+        esc_attr( get_the_title() ),
+        esc_attr( get_the_date( DATE_ISO8601 ) ),
+        esc_html( get_the_date() )
+    );
+}

@@ -120,9 +120,8 @@ article.first-post {
   padding-top: 40px;
 }
 
-/* Decrease size and letter spacing of entry title meta, e.g., "Raam Dev in Journal" */
+/* Decrease letter spacing of entry title meta, e.g., "Raam Dev in Journal" */
 .entry-title-meta {
-  font-size: 12px;
   letter-spacing : 0;
 }
 
@@ -133,4 +132,13 @@ article.first-post {
 .pingback p a {
   color: black;
   text-decoration: none;
+}
+
+/* Hide separator before date at the top of Single posts (becuase we float the date to the right; see below) */
+.single .entry-title-meta-post-date .sep {
+  display : none;
+}
+/* Float the date to the right on Single posts (requires customizations to independent_publisher_posted_on_date() in functions.php) */
+.single .entry-title-meta-post-date-permalink {
+  float: right;
 }
