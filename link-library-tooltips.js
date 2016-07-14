@@ -8,7 +8,7 @@
  * <div style='display:none' id='tooltip'> </div>
  *
  * Place link-library-tooltips.js in the Child Theme directory and then use the following in
- * functions.php file to load the JavaScript:
+ * the functions.php file to load the JavaScript:
  
 	 function raamdev_link_library_tooltips() {
 		global $post;
@@ -18,7 +18,7 @@
 	 }
 	 add_action( 'wp_enqueue_scripts', 'raamdev_link_library_tooltips');
  *
- * See also the custom stylesheet (should replace everything inside Link Library → Style Sheet):
+ * See also the custom stylesheet (should replace everything inside Link Library → Stylesheet):
  * https://gist.github.com/raamdev/25eaf22080955154dc5385187712b3d7
  */
 var tooltip=function(){
