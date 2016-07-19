@@ -142,3 +142,11 @@ article.first-post {
 .single .entry-title-meta .entry-title-meta-post-date-permalink {
   float: right;
 }
+
+/* Increase content font size for asides and quotes on mobile devices */
+@media only screen and (max-width: 500px) {
+  .format-aside .entry-content,
+  .format-quote .entry-content {
+    font-size: inherit;
+  }
+}
