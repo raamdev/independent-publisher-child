@@ -166,3 +166,8 @@ article.first-post {
     font-size: 12px;
   }
 }
+
+/* Widen MailChimp email input field. */
+.post-author-bottom #mc_embed_signup input.email {
+  width: 550px;
+}
