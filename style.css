@@ -167,6 +167,22 @@ article.first-post {
   }
 }
 
+/* Increase author card fonts slightly for mobile devices */
+@media only screen and (max-width: 768px) {
+  .site-description {
+    font-size: 15px;
+  }
+
+  .site-published-date {
+    font-size: 14px;
+    line-height: 3;
+  }
+
+  .site-published-location {
+    font-size: 14px;
+  }
+}
+
 /* Widen MailChimp email input field. */
 .post-author-bottom #mc_embed_signup input.email {
   width: 75%;
