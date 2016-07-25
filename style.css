@@ -161,4 +161,8 @@ article.first-post {
     font-size: 12px;
     line-height: 2;
   }
+
+  .site-published-location {
+    font-size: 12px;
+  }
 }
