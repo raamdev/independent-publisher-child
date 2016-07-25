@@ -318,3 +318,79 @@ function independent_publisher_posted_on_date() {
         esc_html( get_the_date() )
     );
 }
+
+
+/*
+ * Outputs post author info for display on bottom of single posts
+ * with subscription form at bottom.
+ */
+function independent_publisher_posted_author_bottom_card() {
+    if ( !independent_publisher_show_author_card() ) {
+        return; // This option has been disabled
+    }
+
+    do_action( 'independent_publisher_before_post_author_bottom_card' );
+    ?>
+    <div class="post-author-bottom">
+        <div class="post-author-card">
+            <a class="site-logo" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>">
+                <?php echo get_avatar( get_the_author_meta( 'ID' ), 100 ); ?>
+            </a>
+
+            <div class="post-author-info">
+                <h1 class="site-title">
+                    <?php independent_publisher_posted_author(); ?>
+                </h1>
+
+                <h2 class="site-description"><?php the_author_meta( 'description' ) ?></h2>
+            </div>
+            <div class="post-published-date">
+                <h2 class="site-published"><?php _e( 'Published', 'independent-publisher' ); ?></h2>
+                <h2 class="site-published-date"><?php independent_publisher_posted_on_date(); ?></h2>
+                <?php /* Show last updated date if the post was modified AND
+							Show Updated Date on Single Posts option is enabled AND
+								'independent_publisher_hide_updated_date' Custom Field is not present on this post */ ?>
+                <?php if ( get_the_modified_date() !== get_the_date() &&
+                           independent_publisher_show_updated_date_on_single() &&
+                           !get_post_meta( get_the_ID(), 'independent_publisher_hide_updated_date', true )
+                ) : ?>
+                    <h2 class="site-published"><?php _e( 'Updated', 'independent-publisher' ); ?></h2>
+                    <h2 class="site-published-date"><?php independent_publisher_post_updated_date(); ?></h2>
+                <?php endif; ?>
+
+                <?php do_action( 'independent_publisher_after_post_published_date' ); ?>
+
+            </div>
+        </div>
+        <div style="margin-top:50px;">
+            <!-- Begin MailChimp Signup Form -->
+            <link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
+            <style type="text/css">
+                #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
+                /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+                   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+            </style>
+            <div id="mc_embed_signup">
+                <form action="//raamdev.us1.list-manage.com/subscribe/post?u=5daf0f6609de2506882857a28&amp;id=dc1b1538af" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                    <div style="display:none;"> <input type="hidden" name="group[1129]" value="1" id="mce-group[1129]"> </div>
+                    <div style="display:none;"> <input type="hidden" name="group[1873]" value="32" id="mce-group[1873]"> </div>
+                    <div style="display:none;"> <input type="hidden" name="mce-group[1989][64]" value="64" id="mce-group[1989]-1989-0"> </div>
+                    <div style="display:none;"> <input type="hidden" name="MERGE3" value="<?php echo 'https://' . $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]; ?>" id="MERGE3"> </div>
+
+                    <div id="mc_embed_signup_scroll">
+
+                        <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+                        <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                        <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5daf0f6609de2506882857a28_dc1b1538af" tabindex="-1" value=""></div>
+                        <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+                    </div>
+                </form>
+            </div>
+
+            <!--End mc_embed_signup-->
+        </div>
+    </div>
+    <!-- .post-author-bottom -->
+    <?php
+    do_action( 'independent_publisher_after_post_author_bottom_card' );
+}
