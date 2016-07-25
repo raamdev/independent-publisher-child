@@ -150,3 +150,15 @@ article.first-post {
     font-size: inherit;
   }
 }
+
+/* Use default author card sizes under 1200px */
+@media only screen and (max-width: 1200px) {
+  .site-description {
+    font-size: 13px;
+  }
+
+  .site-published-date {
+    font-size: 12px;
+    line-height: 2;
+  }
+}
