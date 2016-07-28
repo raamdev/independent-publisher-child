@@ -379,7 +379,7 @@ function independent_publisher_posted_author_bottom_card() {
 
                     <div id="mc_embed_signup_scroll">
 
-                        <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
+                        <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Enter your email address here to subscribe →" required>
                         <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
                         <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5daf0f6609de2506882857a28_dc1b1538af" tabindex="-1" value=""></div>
                         <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
