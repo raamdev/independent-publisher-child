@@ -232,7 +232,7 @@ function raamdev_logged_in_menu_items( $nav, $args ) {
 	return $nav;
 }
 
-add_filter( 'wp_nav_menu_items', 'raamdev_logged_in_menu_items', 10, 2 );
+//add_filter( 'wp_nav_menu_items', 'raamdev_logged_in_menu_items', 10, 2 );
 
 
 /*
