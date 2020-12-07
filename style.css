@@ -192,3 +192,8 @@ article.first-post {
     width: 100%;
   }
 }
+
+/* Fix button style for Jetpack contact form. */
+.wp-block-button__link {
+	padding: 0px 15px 0px 15px;
+}
