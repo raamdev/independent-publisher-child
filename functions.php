@@ -362,24 +362,47 @@ function independent_publisher_posted_author_bottom_card() {
 
             </div>
         </div>
-        <div style="margin-top:50px;">
+        <div style="margin-top:70px;">
             <!-- Begin MailChimp Signup Form -->
-            <link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
             <style type="text/css">
+			/* MailChimp Form Embed Code - Horizontal Super Slim - 12/16/2015 v10.7
+				Adapted from: http://blog.heyimcat.com/universal-signup-form/ */
+
+				#mc_embed_signup form {text-align:center; padding:10px 0 10px 0;}
+				.mc-field-group { display: inline-block; } /* positions input field horizontally */
+				#mc_embed_signup input.name, #mc_embed_signup input.email, #mc_embed_signup select.frequency {font-family:"Open Sans","Helvetica Neue",Arial,Helvetica,Verdana,sans-serif; font-size: 15px; border: 1px solid #ABB0B2;  -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; color: #343434; background-color: #fff; box-sizing:border-box; height:32px; padding: 0px 0.4em; display: inline-block; margin: 0; vertical-align:top;}
+				#mc_embed_signup input.name { width: 200px; margin-right: 10px; }
+				#mc_embed_signup input.email { width: 200px; margin-right: 10px; }
+				#mc_embed_signup select.frequency { width: 140px; margin-right: 10px; }
+				#mc_embed_signup label {display:block; font-size:16px; padding-bottom:10px; font-weight:bold;}
+				#mc_embed_signup .clear {display: inline-block;} /* positions button horizontally in line with input */
+				#mc_embed_signup .button {font-size: 13px; border: none; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; letter-spacing: .03em; color: #fff; background-color: #aaa; box-sizing:border-box; height:32px; line-height:32px; padding:0 18px; display: inline-block; margin: 0; transition: all 0.23s ease-in-out 0s;}
+				#mc_embed_signup .button:hover {background-color:#777; cursor:pointer;}
+				#mc_embed_signup div#mce-responses {float:left; top:-1.4em; padding:0em .5em 0em .5em; overflow:hidden; width:90%;margin: 0 5%; clear: both;}
+				#mc_embed_signup div.response {margin:1em 0; padding:1em .5em .5em 0; font-weight:bold; float:left; top:-1.5em; z-index:1; width:80%;}
+				#mc_embed_signup #mce-error-response {display:none;}
+				#mc_embed_signup #mce-success-response {color:#529214; display:none;}
+				#mc_embed_signup label.error {display:block; float:none; width:auto; margin-left:1.05em; text-align:left; padding:.5em 0;}
+				@media (max-width: 768px) {
+					#mc_embed_signup input.name, #mc_embed_signup input.email, #mc_embed_signup select.frequency {width:100%; margin-bottom:5px; margin-right:0;}
+					#mc_embed_signup .clear {display: block; width: 100% }
+					#mc_embed_signup .button {width: 100%; margin:0; }
+				}
                 #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
-                /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
-                   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
             </style>
             <div id="mc_embed_signup">
                 <form action="//raamdev.us1.list-manage.com/subscribe/post?u=5daf0f6609de2506882857a28&amp;id=dc1b1538af" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                    <div style="display:none;"> <input type="hidden" name="group[1129]" value="1" id="mce-group[1129]"> </div>
-                    <div style="display:none;"> <input type="hidden" name="group[1873]" value="32" id="mce-group[1873]"> </div>
-                    <div style="display:none;"> <input type="hidden" name="mce-group[1989][64]" value="64" id="mce-group[1989]-1989-0"> </div>
                     <div style="display:none;"> <input type="hidden" name="MERGE3" value="<?php echo 'https://' . $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]; ?>" id="MERGE3"> </div>
 
                     <div id="mc_embed_signup_scroll">
 
-                        <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Enter your email address here to subscribe →" required>
+					<input type="text" value="" name="FNAME" class="name" id="mce-FNAME" placeholder="Name" required="">
+						<input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="E-mail address" required>
+						<select name="group[1129]" class="frequency" id="mce-group[1129]">
+							<option value="1">1 email per day</option>
+							<option value="2" selected>1 email per week</option>
+							<option value="4">1 email per month</option>
+						</select>
                         <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
                         <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5daf0f6609de2506882857a28_dc1b1538af" tabindex="-1" value=""></div>
                         <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
