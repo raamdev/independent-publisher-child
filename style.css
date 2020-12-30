@@ -186,16 +186,6 @@ article.first-post {
   }
 }
 
-/* Widen MailChimp email input field. */
-.post-author-bottom #mc_embed_signup input.email {
-  width: 75%;
-}
-@media only screen and (max-width: 768px) {
-  .post-author-bottom #mc_embed_signup input.email {
-    width: 100%;
-  }
-}
-
 /* Fix button style for Jetpack contact form. */
 .wp-block-button__link {
 	padding: 0px 15px 0px 15px;
