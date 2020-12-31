@@ -190,3 +190,9 @@ article.first-post {
 .wp-block-button__link {
 	padding: 0px 15px 0px 15px;
 }
+
+/* Social buttons */
+ul.social-icons { max-width: 60%; padding: 0; float: right; list-style: none; margin-top: 7px; }
+ul.social-icons li { float: left; margin-right: 12px; padding: 0; }
+ul.social-icons svg { width: 20px; }
+div.social-permalink { font-size: 70%; float: left; }

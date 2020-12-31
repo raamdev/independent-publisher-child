@@ -417,3 +417,26 @@ function independent_publisher_posted_author_bottom_card() {
     <?php
     do_action( 'independent_publisher_after_post_author_bottom_card' );
 }
+
+/*
+ * Add permalink and social sharing buttons to bottom of post content
+ */
+add_filter( 'the_content', 'independent_publisher_child_social_buttons', 1 );
+ 
+function independent_publisher_child_social_buttons( $content ) {
+ 
+    // Check if we're inside the main loop in a single Post.
+    if ( is_singular() && in_the_loop() && is_main_query() ) {
+		$social_html = '<div style="margin-top: 50px;"><ul class="social-icons">';
+
+		$social_html .= '<li><a href="http://www.facebook.com/sharer/sharer.php?u=' . get_permalink() .'&amp;title='. get_the_title() .'"><div class="svg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-1416 1523 12.579 12.579"> <g id="socialshare_facebook" transform="translate(-2156 934.881)"> <path id="socialshare_facebook-2" d="M11.887,0H.692A.692.692,0,0,0,0,.692v11.2a.692.692,0,0,0,.692.692H6.719V7.71H5.079v-1.9h1.64v-1.4A2.288,2.288,0,0,1,9.162,1.9a12.316,12.316,0,0,1,1.462.079V3.669H9.617c-.786,0-.938.377-.938.928V5.807h1.876l-.241,1.9H8.679v4.869h3.2a.692.692,0,0,0,.7-.692V.692A.692.692,0,0,0,11.887,0" transform="translate(740 588.119)"></path> </g> </svg></div> </a></li>';
+		
+		$social_html .= '<li> <a href="http://twitter.com/intent/tweet?text='. get_the_title() .'+' . get_permalink() .'"><div class="svg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-1215 1632 12.579 12.579"> <g id="socialshare_twitter" transform="translate(-1980.723 1043.881)"> <path id="socialshare_twitter-2" d="M11.646,0H.928A.917.917,0,0,0,0,.907V11.672a.917.917,0,0,0,.928.907H11.646a.917.917,0,0,0,.933-.907V.907A.917.917,0,0,0,11.646,0ZM10.561,4.114v.278a6.221,6.221,0,0,1-6.289,6.263A6.289,6.289,0,0,1,.891,9.665a4.418,4.418,0,0,0,3.3-.912,2.207,2.207,0,0,1-2.1-1.53,2.1,2.1,0,0,0,.991-.037A2.2,2.2,0,0,1,1.336,5.026V5a2.191,2.191,0,0,0,1,.273,2.2,2.2,0,0,1-.681-2.94,6.242,6.242,0,0,0,4.539,2.3A2.28,2.28,0,0,1,6.132,4.1,2.207,2.207,0,0,1,8.339,1.9a2.18,2.18,0,0,1,1.62.718,4.549,4.549,0,0,0,1.4-.524,2.238,2.238,0,0,1-.98,1.216,4.471,4.471,0,0,0,1.263-.351h0a4.476,4.476,0,0,1-1.08,1.153Z" transform="translate(765.723 588.119)"></path> </g> </svg></div> </a></li>';
+		
+		$social_html .= '</ul><div class="social-permalink"><p><a title="Permalink for '. get_the_title() .' " href="' . get_permalink() .'">' . get_permalink() .'</a></p></div></div>';
+		
+		return $content . $social_html;
+    }
+ 
+    return $content;
+}
