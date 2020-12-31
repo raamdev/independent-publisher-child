@@ -426,7 +426,7 @@ add_filter( 'the_content', 'independent_publisher_child_social_buttons', 1 );
 function independent_publisher_child_social_buttons( $content ) {
  
     // Check if we're inside the main loop in a single Post.
-    if ( is_singular() && in_the_loop() && is_main_query() ) {
+    if ( is_singular() && is_single() && in_the_loop() && is_main_query() ) {
 		$social_html = '<div style="margin-top: 50px;"><ul class="social-icons">';
 
 		$social_html .= '<li><a target="_new" href="http://www.facebook.com/sharer/sharer.php?u=' . get_permalink() .'&amp;title='. get_the_title() .'"><div class="svg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-1416 1523 12.579 12.579"> <g id="socialshare_facebook" transform="translate(-2156 934.881)"> <path id="socialshare_facebook-2" d="M11.887,0H.692A.692.692,0,0,0,0,.692v11.2a.692.692,0,0,0,.692.692H6.719V7.71H5.079v-1.9h1.64v-1.4A2.288,2.288,0,0,1,9.162,1.9a12.316,12.316,0,0,1,1.462.079V3.669H9.617c-.786,0-.938.377-.938.928V5.807h1.876l-.241,1.9H8.679v4.869h3.2a.692.692,0,0,0,.7-.692V.692A.692.692,0,0,0,11.887,0" transform="translate(740 588.119)"></path> </g> </svg></div> </a></li>';
