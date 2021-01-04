@@ -441,6 +441,9 @@ function independent_publisher_child_social_buttons( $content ) {
     return $content;
 }
 
+/**
+ * Customized to not show comments that are really webmentions
+ */
 function independent_publisher_comment( $comment, $args, $depth ) {
 	$GLOBALS['comment']    = $comment;
 	$comment_content_class = ''; // Used to style the comment-content differently when comment is awaiting moderation
@@ -489,4 +492,17 @@ function independent_publisher_comment( $comment, $args, $depth ) {
 		<!-- .reply -->
 	</article><!-- #comment-## -->
 	<?php
+}
+
+/**
+ * Tweaked to show separator when there are webmentions
+ */
+function independent_publisher_get_post_word_count() {
+	if ( !post_password_required() && ( ( comments_open() && !independent_publisher_hide_comments() ) || independent_publisher_comment_count_mentions() > 0 ) ) {
+		$separator = ' <span class="sep"> ' . apply_filters( 'independent_publisher_entry_meta_separator', '|' ) . ' </span>';
+	} else {
+		$separator = '';
+	}
+
+	return sprintf( '<span>' . __( '%1$s Words', 'independent-publisher' ) . '</span>%2$s', independent_publisher_post_word_count(), $separator );
 }
