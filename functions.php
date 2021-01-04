@@ -418,7 +418,8 @@ function independent_publisher_posted_author_bottom_card() {
     do_action( 'independent_publisher_after_post_author_bottom_card' );
 }
 
-/*
+/**
+ * @since 2021-01-03
  * Add permalink and social sharing buttons to bottom of post content
  */
 add_filter( 'the_content', 'independent_publisher_child_social_buttons', 1 );
@@ -442,6 +443,7 @@ function independent_publisher_child_social_buttons( $content ) {
 }
 
 /**
+ * @since 2021-01-03
  * Customized to not show comments that are really webmentions
  */
 function independent_publisher_comment( $comment, $args, $depth ) {
@@ -495,6 +497,7 @@ function independent_publisher_comment( $comment, $args, $depth ) {
 }
 
 /**
+ * @since 2021-01-03
  * Tweaked to show separator when there are webmentions
  */
 function independent_publisher_get_post_word_count() {
@@ -505,4 +508,62 @@ function independent_publisher_get_post_word_count() {
 	}
 
 	return sprintf( '<span>' . __( '%1$s Words', 'independent-publisher' ) . '</span>%2$s', independent_publisher_post_word_count(), $separator );
+}
+
+/**
+ * @since 2021-01-03
+ * Tweaked to hide categories on posts after January 1st, 2021 (focusing on tags instead)
+ */
+function independent_publisher_posted_author_cats() {
+
+	if ( strtotime( get_the_date() ) > strtotime( date( '2021-01-01' ) ) ) {
+		return;
+	}
+
+	/* translators: used between list items, there is a space after the comma */
+	$categories_list = get_the_category_list( __( ', ', 'independent-publisher' ) );
+
+	if ( ( !post_password_required() && comments_open() && !independent_publisher_hide_comments() ) || ( !post_password_required() && independent_publisher_show_post_word_count() && !get_post_format() ) || independent_publisher_show_date_entry_meta() ) {
+		$separator = apply_filters( 'independent_publisher_entry_meta_separator', '|' );
+	} else {
+		$separator = '';
+	}
+
+	if ( independent_publisher_is_multi_author_mode() ) :
+		if ( $categories_list && independent_publisher_categorized_blog() ) :
+			echo '<span class="cat-links">';
+			printf(
+				'<a href="%1$s" title="%2$s">%3$s</a> %4$s %5$s',
+				esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
+				esc_attr( sprintf( __( 'View all posts by %s', 'independent-publisher' ), get_the_author() ) ),
+				esc_html( get_the_author() ),
+				independent_publisher_entry_meta_category_prefix(),
+				$categories_list
+			);
+			echo '</span> <span class="sep"> ' . $separator . '</span>';
+		else :
+			echo '<span class="cat-links">';
+			printf(
+				'%1$s <a href="%2$s" title="%3$s">%4$s</a>',
+				independent_publisher_entry_meta_author_prefix(),
+				esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
+				esc_attr( sprintf( __( 'View all posts by %s', 'independent-publisher' ), get_the_author() ) ),
+				esc_html( get_the_author() )
+			);
+			echo '</span>';
+		endif; // End if categories
+	else : // not Multi-Author Mode
+		if ( $categories_list && independent_publisher_categorized_blog() ) :
+			echo '<span class="cat-links">';
+			printf(
+				'%1$s %2$s',
+				independent_publisher_entry_meta_category_prefix(),
+				$categories_list
+			);
+			echo '</span> <span class="sep"> ' . $separator . '</span>';
+		else :
+			echo '<span class="cat-links">';
+			echo '</span>';
+		endif; // End if categories
+	endif; // End if independent_publisher_is_multi_author_mode()
 }
