@@ -223,3 +223,7 @@ ol.commentlist, .mentions-list { font-size: 100%; }
 
 /* Hide the entry title meta on the first post, as there's already a entry meta at the bottom of the post */
 .show-full-content-first-post .entry-title-meta { display: none; }
+
+/* Nav menu tweaks */
+.single.single-column-layout .site-header { text-align: left; }
+.home #menu-item-19389, .page #menu-item-19389 {display: none; }
