@@ -512,3 +512,17 @@ function independent_publisher_get_post_word_count() {
 function independent_publisher_posted_author_cats() {
         return;
 }
+
+/** 
+* @since 2021-10-25 
+* Fix issue where post meta separator was missing after Published date when comments and word count were disabled, but webmentions were enabled. 
+*/
+function independent_publisher_get_post_date() {
+        if ( ( comments_open() && !independent_publisher_hide_comments() ) || ( independent_publisher_show_post_word_count() && !get_post_format() ) || ( !post_password_required() && pings_open() && independent_publisher_comment_count_mentions() ) ) {
+                $separator = ' <span class="sep"> ' . apply_filters( 'independent_publisher_entry_meta_separator', '|' ) . ' </span>';
+        } else {
+                $separator = '';
+        }
+
+        return independent_publisher_posted_on_date() . $separator;
+}
