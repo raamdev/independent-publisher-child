@@ -504,3 +504,11 @@ function independent_publisher_get_post_word_count() {
 
         return sprintf( '<span>' . __( '%1$s Words', 'independent-publisher' ) . '</span>%2$s', independent_publisher_post_word_count(), $separator );
 }
+
+/**
+ * @since 2021-01-03
+ * Hide categories (focusing on tags instead)
+ */
+function independent_publisher_posted_author_cats() {
+        return;
+}
