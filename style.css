@@ -199,3 +199,12 @@ div.social-permalink { font-size: 70%; float: left; }
 
 /* Hide the "Comments are closed." message. */
 .nocomments { display: none; }
+
+/* Headers and titles */
+.show-full-content-first-post h1.entry-title, .show-full-content-first-post-sticky h1.entry-title, .format-standard .entry-title { font-size: 2.2em; }
+
+/* Body style */
+body { font: 1.8em Georgia, "Times New Roman", Times, serif; line-height: 1.5em; color: #2c3e50 }
+
+/* Remove hypenation */
+.entry-content, .entry-summary, .widget-area .widget, .comment { hyphens: none; }
