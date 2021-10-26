@@ -427,3 +427,12 @@ function independent_publisher_get_post_date() {
 
         return independent_publisher_posted_on_date() . $separator;
 }
+
+/**
+* @since 2021-10-25
+* Add YARPP Related Posts shortcode to bottom of posts
+*/
+function yarpp_related_posts() {
+        echo do_shortcode('[yarpp]');
+}
+add_action( 'independent_publisher_before_post_bottom_tag_list', 'yarpp_related_posts' );
