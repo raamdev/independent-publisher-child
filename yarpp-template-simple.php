@@ -13,7 +13,7 @@ Author: YARPP Team
         while ( have_posts() ) :
                 the_post();
                 ?>
-        <li><a href="<?php the_permalink(); ?>" rel="bookmark norewrite" title="<?php the_title_attribute(); ?>" ><?php the_title(); ?></a> (<?php echo get_the_date('Y'); ?>)<!-- (<?php the_score(); ?>)--></li>
+        <li><a href="<?php the_permalink(); ?>" rel="bookmark norewrite" title="<?php the_title_attribute(); ?>" ><?php the_title(); ?></a> <small>(<?php echo get_the_date('Y'); ?>)</small><!-- (<?php the_score(); ?>)--></li>
         <?php endwhile; ?>
 </ul>
 <?php else : ?>
