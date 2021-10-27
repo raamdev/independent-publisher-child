@@ -436,17 +436,3 @@ function yarpp_related_posts() {
         echo do_shortcode('[yarpp]');
 }
 add_action( 'independent_publisher_before_post_bottom_tag_list', 'yarpp_related_posts' );
-
-/**
-* @since 2021-10-26
-* Clean up fields on /manage-subscription/ page for MailPoet 
-*/
-function mp_remove_manage_fields( $form ) {	
-
-	unset($form[1]); // Last Name
-	unset($form[4]); // Signup Location
-	unset($form[5]); // List selection
-    	
-	return $form;
-}
-add_filter( 'mailpoet_manage_subscription_page_form_fields', 'mp_remove_manage_fields', 10); 
