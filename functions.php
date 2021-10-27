@@ -436,3 +436,22 @@ function yarpp_related_posts() {
         echo do_shortcode('[yarpp]');
 }
 add_action( 'independent_publisher_before_post_bottom_tag_list', 'yarpp_related_posts' );
+
+/* Fix for MailPoet bug that overrode user-selected field values with field default */
+add_filter('mailpoet_manage_subscription_page_form_fields', function ($form) {
+	foreach ($form as $k => $field) {
+		if ($field['type'] !== 'select' || strpos($field['id'], 'cf_') !== 0) {
+			continue;
+		}
+		if (!empty($field['params']['value'])) {
+			foreach ($field['params']['values'] as $k2 => $value) {
+				if (isset($value['is_checked'])) {
+					$value['is_checked'] = false;
+				}
+				$field['params']['values'][$k2] = $value;
+			}
+			$form[$k] = $field;
+		}
+	}
+	return $form;
+});
