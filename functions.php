@@ -455,3 +455,13 @@ add_filter('mailpoet_manage_subscription_page_form_fields', function ($form) {
 	}
 	return $form;
 });
+
+/**
+* @since 2021-10-27
+* Remove MailPoet pages from XML Sitemaps
+*/
+add_filter( 'wp_sitemaps_post_types', 'remove_post_type_from_wp_sitemap' );
+function remove_post_type_from_wp_sitemap( $post_types ) {
+     unset( $post_types['mailpoet_page'] );
+     return $post_types;
+}
