@@ -465,3 +465,50 @@ function remove_post_type_from_wp_sitemap( $post_types ) {
      unset( $post_types['mailpoet_page'] );
      return $post_types;
 }
+
+/**
+ * @since 2021-11-08
+ * Use get_header_image_tag() for header image output
+ */
+function independent_publisher_posted_author_card() {
+	/**
+	 * This function gets called outside the loop (in header.php),
+	 * so we need to figure out the post author ID and Nice Name manually.
+	 */
+	global $wp_query;
+	$post_author_id = $wp_query->post->post_author;
+	$show_avatars   = get_option( 'show_avatars' );
+	?>
+
+	<?php if ( ( !$show_avatars || $show_avatars === 0 ) && !independent_publisher_is_multi_author_mode() && get_header_image() ) : ?>
+		<a class="site-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
+			<?php echo get_header_image_tag(); ?>
+		</a>
+	<?php else: ?>
+		<a class="site-logo" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID', $post_author_id ) ); ?>">
+			<?php echo get_avatar( get_the_author_meta( 'ID', $post_author_id ), 100 ); ?>
+		</a>
+	<?php endif; ?>
+
+	<div class="site-title"><?php independent_publisher_posted_author(); ?></div>
+	<div class="site-description"><?php the_author_meta( 'description', $post_author_id ) ?></div>
+
+	<?php get_template_part( 'menu', 'social' ); ?>
+
+	<div class="site-published-separator"></div>
+	<h2 class="site-published"><?php _e( 'Published', 'independent-publisher' ); ?></h2>
+	<h2 class="site-published-date"><?php independent_publisher_posted_on_date(); ?></h2>
+	<?php /* Show last updated date if the post was modified AND
+				Show Updated Date on Single Posts option is enabled AND
+					'independent_publisher_hide_updated_date' Custom Field is not present on this post */ ?>
+	<?php if ( get_the_modified_date() !== get_the_date() &&
+		independent_publisher_show_updated_date_on_single() &&
+		!get_post_meta( get_the_ID(), 'independent_publisher_hide_updated_date', true )
+	) : ?>
+		<h2 class="site-published"><?php _e( 'Updated', 'independent-publisher' ); ?></h2>
+		<h2 class="site-published-date"><?php independent_publisher_post_updated_date(); ?></h2>
+	<?php endif; ?>
+
+	<?php do_action( 'independent_publisher_after_post_published_date' ); ?>
+	<?php
+}
