@@ -5,7 +5,7 @@ Author: Raam Dev
 Author URI: http://raamdev.com
 Description: A clean minimal theme for independent publishers. Ideal for single-author blogs.
 Template: independent-publisher
-Version: 1.3.10
+Version: 1.3.11
 License: GNU GPLv3
 License URI: http://www.gnu.org/copyleft/gpl.html
 Tags: light, white, blue, two-columns, left-sidebar, flexible-width, custom-background, custom-colors, custom-menu, editor-style, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready
@@ -196,6 +196,7 @@ div.social-permalink { font-size: 12px; }
 /* Body style */
 body, button, input, select, textarea { font-family: sans-serif; }
 body { font: 1.7em "AvenirNext", "Helvetica Neue", Helvetica, Arial, sans-serif; color: #000000; line-height: 1.4em; }
+select { padding: 5px !important; }
 
 /* Remove hypenation */
 .entry-content, .entry-summary, .widget-area .widget, .comment { hyphens: none; }
@@ -207,6 +208,7 @@ body { font: 1.7em "AvenirNext", "Helvetica Neue", Helvetica, Arial, sans-serif;
 ol.commentlist, .mentions-list { font-size: 100%; }
 #commentform textarea { font-family: sans-serif}
 #cancel-comment-reply-link { font-family: inherit; }
+.comment .reply a { padding: 5px; }
 
 /* Tweak entry title meta */
 .single .entry-title-meta .entry-title-meta-post-date-permalink { float: none; }
@@ -220,6 +222,11 @@ ol.commentlist, .mentions-list { font-size: 100%; }
 .home .site-header-info { display: block; }
 .home.single-column-layout .site-header { text-align: center; }
 .home #menu-item-19389 { display: none; }
+.main-navigation a { padding: 5px; }
+
+/* Entry Meta tweaks */
+.entry-meta a { padding: 5px; }
+.single-column-layout .entry-meta { padding-top: 10px; }
 
 /* YARPP Related Posts style overrides */
 .yarpp-related h3 {
@@ -285,7 +292,7 @@ form.mailpoet-manage-subscription .mailpoet_paragraph{
 * html #mc_embed_signup .size1of2 {margin-right:2%; /* Fix for IE6 double margins. */}
 #mc_embed_signup .mc-field-group label {display:block; margin-bottom:3px;}
 #mc_embed_signup .mc-field-group input {display:block; width:100%; padding:8px 0; text-indent:2%;}
-#mc_embed_signup .mc-field-group select {display:inline-block; width:99%; padding:5px 0; margin-bottom:2px;}
+#mc_embed_signup .mc-field-group select {display:inline-block; width:99%; margin-bottom:2px;}
 
 #mc_embed_signup .datefield, #mc_embed_signup .phonefield-us{padding:5px 0;}
 #mc_embed_signup .datefield input, #mc_embed_signup .phonefield-us input{display:inline; width:60px; margin:0 2px; letter-spacing:1px; text-align:center; padding:5px 0 2px 0;}
