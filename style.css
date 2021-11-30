@@ -5,7 +5,7 @@ Author: Raam Dev
 Author URI: http://raamdev.com
 Description: A clean minimal theme for independent publishers. Ideal for single-author blogs.
 Template: independent-publisher
-Version: 1.4.3
+Version: 1.4.4
 License: GNU GPLv3
 License URI: http://www.gnu.org/copyleft/gpl.html
 Tags: light, white, blue, two-columns, left-sidebar, flexible-width, custom-background, custom-colors, custom-menu, editor-style, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready
@@ -163,6 +163,7 @@ select { padding: 5px !important; }
 
 /* Comments tweaks */
 .comment .reply a { padding: 5px; }
+ol.commentlist { font-size: 100%; }
 
 /* Tweak entry title meta */
 .single .entry-title-meta .entry-title-meta-post-date-permalink { float: right; margin-bottom: 15px; }
