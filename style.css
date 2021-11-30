@@ -190,28 +190,20 @@ div.social-permalink { font-size: 12px; }
 /* Hide the "Comments are closed." message. */
 .nocomments { display: none; }
 
-/* Headers and titles */
-.show-full-content-first-post h1.entry-title, .show-full-content-first-post-sticky h1.entry-title, .format-standard .entry-title { font-size: 1.8em; }
-
 /* Body style */
-body, button, input, select, textarea { font-family: sans-serif; }
-body { font: 1.6em "Open Sans", "Segoe UI", Tahoma, sans-serif; color: #000000; line-height: 1.4em; }
 select { padding: 5px !important; }
 
 /* Remove hypenation */
 .entry-content, .entry-summary, .widget-area .widget, .comment { hyphens: none; }
 
-/* Decrease overall width of site, given smaller font size */
-.site, .site-content, .site-footer { max-width: 600px; } 
+/* Decrease overall width of site */
+.site, .site-content, .site-footer { max-width: 650px; } 
 
 /* Comments tweaks */
-ol.commentlist, .mentions-list { font-size: 100%; }
-#commentform textarea { font-family: sans-serif}
-#cancel-comment-reply-link { font-family: inherit; }
 .comment .reply a { padding: 5px; }
 
 /* Tweak entry title meta */
-.single .entry-title-meta .entry-title-meta-post-date-permalink { float: none; }
+.single .entry-title-meta .entry-title-meta-post-date-permalink { float: right; }
 .home .entry-title-meta { display: none; }
 .entry-title-meta { letter-spacing : 0; }
 
