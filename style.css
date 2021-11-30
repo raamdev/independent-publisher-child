@@ -5,7 +5,7 @@ Author: Raam Dev
 Author URI: http://raamdev.com
 Description: A clean minimal theme for independent publishers. Ideal for single-author blogs.
 Template: independent-publisher
-Version: 1.3.12
+Version: 1.4
 License: GNU GPLv3
 License URI: http://www.gnu.org/copyleft/gpl.html
 Tags: light, white, blue, two-columns, left-sidebar, flexible-width, custom-background, custom-colors, custom-menu, editor-style, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready
@@ -32,56 +32,6 @@ and Blueprint http://www.blueprintcss.org/
 /**
  * Contains CSS for modifying plugin styles
  */
-
-
-/* Custom styles for the Snazzy Archives plugin */
-.sz_year {
-	font-size: 15px !important;
-}
-
-.sz_excerpt {
-	display: none;
-}
-
-.sz_title {
-	font-weight: normal !important;
-	font-size: 12px !important;
-}
-
-.snazzy a {
-	display: block;
-}
-
-.snazzy a:visited {
-	color: #444 !important;
-}
-
-.snazzy a:hover {
-	color: #57ad68 !important;
-}
-
-.sz_img {
-	height: inherit !important;
-	line-height: 18px !important;
-}
-
-.sz_clr {
-	padding-top: 10px !important;
-}
-
-/* Journal Subscription Option styles */
-
-.subscription-options-option {
-	float: left;
-	margin-right: 20px;
-}
-
-#journal-notice {
-	background: #eee;
-	padding: 30px 30px 10px 30px;
-	border-radius: 5px;
-	margin-bottom: 20px;
-}
 
 /* Blockquote tweaks */
 blockquote cite:before {
@@ -245,27 +195,6 @@ select { padding: 5px !important; }
 .yarpp-related a {
   font-weight: normal !important;
 }
-
-/* MailPoet style tweaks */
-.mailpoet_form .email-frequency select { width: 100%; }
-.mailpoet_form select, .mailpoet_paragraph select { font-size: 16px !important; }
-.mailpoet_form .mailpoet_select_label, .mailpoet_form .mailpoet_text_label { margin-bottom: 5px; }
-.mailpoet_form .mailpoet_submit { margin-top: 20px; }
-form.mailpoet-manage-subscription .mailpoet_text_label, 
-form.mailpoet-manage-subscription .mailpoet_select_label, 
-form.mailpoet-manage-subscription .mailpoet_segment_label{
-    display: block;
-    font-weight:bold;
-}
-form.mailpoet-manage-subscription .mailpoet_select, 
-form.mailpoet-manage-subscription .mailpoet_text{
-  width: 50%;
-  padding: 12px;
-}
-form.mailpoet-manage-subscription .mailpoet_paragraph{
-  margin-bottom:20px
-}
-.mailpoet_segment_label { display: none !important; }
 
 /* MailChimp style tweaks */
 #mc_embed_signup form {display:block; position:relative; text-align:left; padding:10px 0 10px 3%}
