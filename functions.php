@@ -543,3 +543,10 @@ function independent_publisher_mentions() {
 		}
 	}
 }
+
+/**
+ * Disable single-author author_link override, as this messes up ActivityPub author link detection
+ */
+function independent_publisher_single_author_link( $link, $author_id, $author_nicename ) {
+	return $link;
+}
