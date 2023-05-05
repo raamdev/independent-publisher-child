@@ -512,3 +512,33 @@ function independent_publisher_posted_author_card() {
 	<?php do_action( 'independent_publisher_after_post_published_date' ); ?>
 	<?php
 }
+
+/* 
+ * Tweaks for webmentions (needs to be merged upstream after testing)
+ * - Attempts to include other webmention types (mention, like, repost) when showing pings.
+ * - Also hides the webmention comment text altogether for simplicity (should probably become a theme filter)
+ */
+function independent_publisher_mentions() {
+	$args = array(
+		'post_id'  => get_the_ID(),
+		'type__in' => array( 'pings', 'webmention', 'mention', 'like', 'repost' ),
+		'status'   => 'approve'
+	);
+	$mention_query = new WP_Comment_Query;
+	$mentions = $mention_query->query( $args );
+
+	if ( $mentions ) {
+		foreach ( $mentions as $mention ) {
+			?>
+			<li <?php comment_class( '', $mention->comment_ID ); ?> id="li-comment-<?php echo $mention->comment_ID ?>">
+				<?php if ( ! in_array( $mention->comment_type, [ 'pings', 'webmention', 'mention', 'like', 'repost' ] ) ) : // Webmentions already include author in the comment text ?>
+					<?php printf( '<cite class="fn">%s</cite>', get_comment_author_link( $mention->comment_ID ) ) ?>
+					<small><?php printf( '%1$s', get_comment_date() ); ?></small>
+				<?php endif; ?>
+				<?php // Webmention text is disabled for simplicity ?>
+				<?php // comment_text( $mention->comment_ID ); ?>
+			</li>
+			<?php
+		}
+	}
+}
