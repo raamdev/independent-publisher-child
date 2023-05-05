@@ -321,8 +321,9 @@ function independent_publisher_posted_on_date() {
 
 /*
  * Add permalink and social sharing buttons to bottom of post content
+ * Removed 2023-05-05: Facebook and Twitter are not as relevent anymore and I'd rather not advertise their brands on my site.
  */
-add_filter( 'the_content', 'independent_publisher_child_social_buttons', 1 );
+//add_filter( 'the_content', 'independent_publisher_child_social_buttons', 1 );
  
 function independent_publisher_child_social_buttons( $content ) {
  
