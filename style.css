@@ -166,7 +166,7 @@ select { padding: 5px !important; }
 ol.commentlist { font-size: 100%; }
 
 /* Tweak entry title meta */
-.single .entry-title-meta .entry-title-meta-post-date-permalink { float: right; margin-bottom: 15px; }
+.single .entry-title-meta .entry-title-meta-post-date-permalink { display: none; }
 .home .entry-title-meta { display: none; }
 .entry-title-meta { letter-spacing : 0; }
 
